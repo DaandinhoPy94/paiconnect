@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./button";
 import { Link } from "react-router-dom";
+import { ABOUT_BG_URL } from "@/lib/constants";
 
 const HeroSection = () => {
   return (
@@ -9,7 +10,7 @@ const HeroSection = () => {
       <div 
         className="absolute inset-0 opacity-30" 
         style={{
-          backgroundImage: `url('/src/assets/banner-tech.png')`,
+          backgroundImage: `url(${ABOUT_BG_URL})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'

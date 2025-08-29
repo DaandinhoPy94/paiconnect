@@ -5,7 +5,7 @@ import SEOHead from "@/components/ui/seo-head";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ABOUT_BG_URL } from "@/lib/constants";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const About = () => {
   return (
@@ -23,7 +23,7 @@ const About = () => {
         {/* Alleen de content-wrapper krijgt de achtergrond */}
         <div
           className="w-full bg-no-repeat bg-cover bg-center"
-          style={{ backgroundImage: `url('${ABOUT_BG_URL}')` }}
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
         >
           {/* Overlay voor leesbaarheid van tekst op lichte vlakken */}
           <div className="relative">
