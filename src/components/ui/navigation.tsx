@@ -2,15 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
-import paiLogo from "@/assets/pai-logo.png";
 
 const Navigation = () => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center space-x-3">
-          <img src={paiLogo} alt="PAi Logo" className="w-10 h-10" />
-          <span className="text-xl font-bold gradient-text">PaiConnect</span>
+        <Link to="/" className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">P</span>
+            </div>
+            <span className="text-xl font-bold gradient-text">PaiConnect</span>
+          </div>
         </Link>
         
         <div className="hidden md:flex items-center space-x-8">

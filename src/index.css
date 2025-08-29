@@ -17,36 +17,35 @@ All colors MUST be HSL for proper theming support.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* Neon blue/cyan AI brand colors */
-    --primary: 200 100% 50%;
+    /* AI-focused primary brand color - deep blue */
+    --primary: 217 91% 25%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 180 100% 60%;
+    --primary-glow: 217 91% 50%;
 
-    /* Electric blue accent */
-    --secondary: 210 100% 60%;
+    /* Secondary - AI accent color */
+    --secondary: 142 76% 36%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 200 100% 95%;
-    --accent-foreground: 200 100% 40%;
+    --accent: 217 91% 95%;
+    --accent-foreground: 217 91% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 200 100% 50%;
+    --ring: 217 91% 50%;
 
     --radius: 0.75rem;
 
-    /* Futuristic neon gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(200 100% 50%), hsl(180 100% 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(210 100% 60%), hsl(190 100% 55%));
-    --gradient-hero: linear-gradient(135deg, hsl(200 100% 50%) 0%, hsl(180 100% 60%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(200 100% 98%));
-    --gradient-neon: linear-gradient(90deg, hsl(200 100% 50%), hsl(180 100% 60%), hsl(210 100% 55%));
+    /* AI-themed gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(142 76% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(217 91% 98%));
 
     /* Advanced shadows for modern AI feel */
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
@@ -84,25 +83,25 @@ All colors MUST be HSL for proper theming support.
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 200 100% 60%;
+    --primary: 217 91% 60%;
     --primary-foreground: 222.2 84% 4.9%;
-    --primary-glow: 180 100% 70%;
+    --primary-glow: 217 91% 70%;
 
-    --secondary: 210 100% 65%;
+    --secondary: 142 76% 50%;
     --secondary-foreground: 222.2 84% 4.9%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 200 30% 17.5%;
-    --accent-foreground: 200 100% 60%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 217 91% 60%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 200 100% 60%;
+    --ring: 217 91% 60%;
 
     /* Dark mode gradients */
     --gradient-hero: linear-gradient(135deg, hsl(222.2 84% 4.9%) 0%, hsl(217.2 32.6% 17.5%) 100%);
@@ -132,13 +131,12 @@ All colors MUST be HSL for proper theming support.
     transition: var(--transition-smooth);
   }
 
-  /* Futuristic AI utility classes */
+  /* AI-themed utility classes */
   .gradient-text {
-    background: var(--gradient-neon);
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradient-shift 3s ease-in-out infinite;
   }
 
   .glow-effect {
@@ -152,34 +150,5 @@ All colors MUST be HSL for proper theming support.
   .card-hover:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-intense);
-  }
-
-  .bg-grid-pattern {
-    background-image: 
-      linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px),
-      linear-gradient(hsl(var(--border)) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-
-  .network-pattern {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .network-pattern::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0.1;
-    background: url('/src/assets/network-pattern.png') center/cover no-repeat;
-    pointer-events: none;
-  }
-
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
   }
 }
