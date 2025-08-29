@@ -1,16 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const Footer = () => {
-  return (
-    <footer className="bg-primary text-primary-foreground py-12">
+  return <footer className="bg-primary text-primary-foreground py-12">
       <div className="container">
         <div className="grid md:grid-cols-4 gap-8">
-            <img 
-              src="/src/assets/logo-32x32.png" 
-              alt="PaiConnect Logo" 
-              className="w-8 h-8"
-            />
+          <div>
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
+                <span className="text-primary font-bold text-lg">P</span>
+              </div>
+              <span className="text-xl font-bold">PaiConnect</span>
+            </div>
+            <p className="text-primary-foreground/80 text-sm">
+              Automate. Accelerate. Advance.<br />
+              Praktische AI voor moderne bedrijven.
+            </p>
+          </div>
           
           <div>
             <h3 className="font-semibold mb-4">Diensten</h3>
@@ -34,7 +39,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
             <div className="text-sm text-primary-foreground/80 space-y-2">
-              <p>info@paiconnect.nl</p>
+              <p>tech@paiconnect.nl</p>
               <p>+31 (0)6 12345678</p>
               <div className="pt-4">
                 <Link to="/contact" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
@@ -49,8 +54,6 @@ const Footer = () => {
           <p>&copy; 2024 PaiConnect. Alle rechten voorbehouden.</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
