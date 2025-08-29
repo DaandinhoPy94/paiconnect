@@ -8,13 +8,7 @@ const HeroSection = () => {
     <section className="relative overflow-hidden bg-gradient-to-br from-background via-primary/5 to-secondary/5 py-20 md:py-32">
       <div className="absolute inset-0 bg-grid-pattern"></div>
       <div 
-        className="absolute inset-0 opacity-30" 
-        style={{
-          backgroundImage: `url(${ABOUT_BG_URL})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="absolute top-1/4 right-1/4 w-32 h-32 opacity-20" 
       ></div>
       <div className="container relative">
         <div className="text-center max-w-4xl mx-auto">
