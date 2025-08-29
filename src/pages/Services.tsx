@@ -60,84 +60,94 @@ const Services = () => {
         canonical="https://paiconnect.nl/diensten"
       />
       
-      <div className="min-h-screen">
+      <div>
         <Navigation />
         
-        <main>
-          <section className="py-16 md:py-24">
-            <div className="container">
-              <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  Onze <span className="gradient-text">AI-diensten</span>
-                </h1>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Van inspiratie tot implementatie - wij begeleiden jouw organisatie door de hele AI-transformatie
-                </p>
-              </div>
-              
-              <div className="space-y-16">
-                {services.map((service, index) => (
-                  <Card key={service.id} className="card-hover">
-                    <div className="grid md:grid-cols-2 gap-8 p-8">
-                      <div>
-                        <CardHeader className="p-0 mb-6">
-                          <div className="flex items-center gap-4 mb-4">
-                            <div className="text-5xl">{service.icon}</div>
-                            <div>
-                              <CardTitle className="text-2xl text-primary">
-                                {service.title}
-                              </CardTitle>
-                              <p className="text-muted-foreground">{service.subtitle}</p>
-                            </div>
-                          </div>
-                        </CardHeader>
-                        
-                        <CardContent className="p-0">
-                          <p className="text-muted-foreground mb-6 leading-relaxed">
-                            {service.description}
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h3 className="font-semibold mb-3">Wat je krijgt:</h3>
-                            <ul className="space-y-2">
-                              {service.deliverables.map((item, idx) => (
-                                <li key={idx} className="flex items-start gap-2">
-                                  <span className="text-secondary mt-1">✓</span>
-                                  <span className="text-sm text-muted-foreground">{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-sm text-muted-foreground mb-1">Prijs</p>
-                              <p className="text-lg font-semibold text-primary">{service.price}</p>
-                            </div>
-                            <Button variant="cta" asChild>
-                              <Link to="/contact">
-                                {service.cta}
-                              </Link>
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </div>
-                      
-                      <div className="flex items-center justify-center bg-gradient-subtle rounded-lg p-8">
-                        <div className="text-center">
-                          <div className="text-8xl mb-4 opacity-50">{service.icon}</div>
-                          <p className="text-muted-foreground">
-                            Praktische AI-implementatie voor moderne bedrijven
-                          </p>
-                        </div>
-                      </div>
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: "url('https://drive.google.com/uc?export=view&id=1hrzkONCOp6tkJCx5BYyFeY__b4WqDVzJ')" }}
+        >
+          <main>
+            <section className="py-16 md:py-24">
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+                <div className="relative">
+                  <div className="container">
+                    <div className="text-center mb-16">
+                      <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                        Onze <span className="gradient-text">AI-diensten</span>
+                      </h1>
+                      <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                        Van inspiratie tot implementatie - wij begeleiden jouw organisatie door de hele AI-transformatie
+                      </p>
                     </div>
-                  </Card>
-                ))}
+                    
+                    <div className="space-y-16">
+                      {services.map((service, index) => (
+                        <Card key={service.id} className="card-hover">
+                          <div className="grid md:grid-cols-2 gap-8 p-8">
+                            <div>
+                              <CardHeader className="p-0 mb-6">
+                                <div className="flex items-center gap-4 mb-4">
+                                  <div className="text-5xl">{service.icon}</div>
+                                  <div>
+                                    <CardTitle className="text-2xl text-primary">
+                                      {service.title}
+                                    </CardTitle>
+                                    <p className="text-muted-foreground">{service.subtitle}</p>
+                                  </div>
+                                </div>
+                              </CardHeader>
+                              
+                              <CardContent className="p-0">
+                                <p className="text-muted-foreground mb-6 leading-relaxed">
+                                  {service.description}
+                                </p>
+                                
+                                <div className="mb-6">
+                                  <h3 className="font-semibold mb-3">Wat je krijgt:</h3>
+                                  <ul className="space-y-2">
+                                    {service.deliverables.map((item, idx) => (
+                                      <li key={idx} className="flex items-start gap-2">
+                                        <span className="text-secondary mt-1">✓</span>
+                                        <span className="text-sm text-muted-foreground">{item}</span>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                                
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <p className="text-sm text-muted-foreground mb-1">Prijs</p>
+                                    <p className="text-lg font-semibold text-primary">{service.price}</p>
+                                  </div>
+                                  <Button variant="cta" asChild>
+                                    <Link to="/contact">
+                                      {service.cta}
+                                    </Link>
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </div>
+                            
+                            <div className="flex items-center justify-center bg-gradient-subtle rounded-lg p-8">
+                              <div className="text-center">
+                                <div className="text-8xl mb-4 opacity-50">{service.icon}</div>
+                                <p className="text-muted-foreground">
+                                  Praktische AI-implementatie voor moderne bedrijven
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </section>
-        </main>
+            </section>
+          </main>
+        </div>
         
         <Footer />
       </div>
