@@ -2,68 +2,66 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Video, Users, Camera, MessageSquare, Play } from "lucide-react";
 import logo from "@/assets/logo.png";
-
 const Footer = () => {
-  return (
-    <footer className="bg-primary text-primary-foreground py-4">
+  return <footer className="bg-primary text-primary-foreground py-[4px]">
       <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center md:text-left">
-          {/* Column 1 (Left): Logo and tagline */}
-          <div className="flex flex-col items-center md:items-start">
-            <div className="flex items-center space-x-2 mb-2">
-              <img src={logo} alt="PaiConnect Logo" className="h-6 md:h-7" />
-              <span className="text-base font-bold leading-tight">PaiConnect</span>
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+          {/* Left side: Logo, tagline, social media, copyright */}
+          <div className="my-[15px] mx-[100px]">
+            <div className="flex items-center space-x-2 mb-4">
+              <img src={logo} alt="PaiConnect Logo" className="w-8 h-8" />
+              <span className="text-xl font-bold">PaiConnect</span>
             </div>
-            <p className="text-primary-foreground/80 text-xs leading-snug">
+            <p className="text-primary-foreground/80 text-sm mb-6">
               Automate. Accelerate. Advance.<br />
               Praktische AI voor moderne bedrijven.
             </p>
-          </div>
-          
-          {/* Column 2 (Center): Social media and copyright */}
-          <div className="flex flex-col items-center">
+            
             {/* Social Media Icons */}
-            <div className="flex gap-2 mb-3">
-              <a href="https://tiktok.com/@paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
-                <Video className="w-4 h-4 md:w-5 md:h-5" />
+            <div className="flex space-x-4 mb-6">
+              <a href="https://tiktok.com/@paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors my-[15px]">
+                <Video size={20} />
               </a>
               <a href="https://facebook.com/paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
-                <Users className="w-4 h-4 md:w-5 md:h-5" />
+                <Users size={20} />
               </a>
               <a href="https://instagram.com/paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
-                <Camera className="w-4 h-4 md:w-5 md:h-5" />
+                <Camera size={20} />
               </a>
               <a href="https://x.com/paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
-                <MessageSquare className="w-4 h-4 md:w-5 md:h-5" />
+                <MessageSquare size={20} />
               </a>
               <a href="https://youtube.com/@paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
-                <Play className="w-4 h-4 md:w-5 md:h-5" />
+                <Play size={20} />
               </a>
             </div>
             
             {/* Copyright */}
-            <div className="text-xs text-primary-foreground/60">
+            <div className="text-sm text-primary-foreground/60">
               <p>&copy; 2024 PaiConnect. Alle rechten voorbehouden.</p>
             </div>
           </div>
           
-          {/* Column 3 (Right): Contact information */}
-          <div className="flex flex-col items-center md:items-end">
-            <h3 className="text-base font-semibold mb-2 leading-tight">Contact</h3>
-            <div className="text-sm text-primary-foreground/80 space-y-1 text-center md:text-right leading-snug">
-              <p>tech@paiconnect.nl</p>
+          {/* Right side: Contact information */}
+          <div>
+            <h3 className="font-semibold mb-4">Contact</h3>
+            <div className="text-sm text-primary-foreground/80 space-y-2 mb-6">
+              <p className="my-[15px] mx-[100px]">tech@paiconnect.nl</p>
               <p>+31 6 23 31 26 15</p>
-              <div className="pt-2">
+              <div className="pt-4">
                 <Link to="/contact" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
                   Plan een kennismaking →
                 </Link>
               </div>
             </div>
+            
+            {/* Copyright for balance */}
+            <div className="text-sm text-primary-foreground/60">
+              <p>&copy; 2024 PaiConnect. Alle rechten voorbehouden.</p>
+            </div>
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
