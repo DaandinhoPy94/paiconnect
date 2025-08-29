@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { BANNER_LANGER_URL } from "@/lib/constants";
+import daanProfile from "@/assets/daan-profile.jpg";
 
 const About = () => {
   return (
@@ -77,8 +78,12 @@ const About = () => {
 
                     <div className="space-y-6">
                       <div className="text-center">
-                        <div className="w-24 h-24 bg-gradient-to-r from-primary to-secondary rounded-full mx-auto mb-4 flex items-center justify-center">
-                          <span className="text-3xl">👨‍💼</span>
+                        <div className="w-24 h-24 mx-auto mb-4">
+                          <img 
+                            src={daanProfile} 
+                            alt="Daan van der Ster - Founder & AI Consultant" 
+                            className="w-full h-full rounded-full object-cover"
+                          />
                         </div>
                         <h3 className="text-2xl font-bold mb-2">
                           Daan van der Ster
