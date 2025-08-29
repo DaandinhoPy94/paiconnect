@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Video, Users, Camera, MessageSquare, Play } from "lucide-react";
 import logo from "@/assets/logo.png";
 const Footer = () => {
   return <footer className="bg-primary text-primary-foreground py-12">
@@ -39,7 +40,7 @@ const Footer = () => {
             <h3 className="font-semibold mb-4">Contact</h3>
             <div className="text-sm text-primary-foreground/80 space-y-2">
               <p>tech@paiconnect.nl</p>
-              <p>+31 (0)6 12345678</p>
+              <p>+31 6 23 31 26 15</p>
               <div className="pt-4">
                 <Link to="/contact" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
                   Plan een kennismaking →
@@ -49,8 +50,30 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-primary-foreground/20 mt-8 pt-8 text-center text-sm text-primary-foreground/60">
-          <p>&copy; 2024 PaiConnect. Alle rechten voorbehouden.</p>
+        <div className="border-t border-primary-foreground/20 mt-8 pt-8">
+          {/* Social Media Icons */}
+          <div className="flex justify-center space-x-6 mb-6">
+            <a href="https://tiktok.com/@paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+              <Video size={20} />
+            </a>
+            <a href="https://facebook.com/paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+              <Users size={20} />
+            </a>
+            <a href="https://instagram.com/paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+              <Camera size={20} />
+            </a>
+            <a href="https://x.com/paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+              <MessageSquare size={20} />
+            </a>
+            <a href="https://youtube.com/@paiconnect" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+              <Play size={20} />
+            </a>
+          </div>
+          
+          {/* Copyright */}
+          <div className="text-center text-sm text-primary-foreground/60">
+            <p>&copy; 2024 PaiConnect. Alle rechten voorbehouden.</p>
+          </div>
         </div>
       </div>
     </footer>;
