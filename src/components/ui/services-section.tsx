@@ -9,22 +9,22 @@ const ServicesSection = () => {
       title: "Lezingen & Keynotes",
       description: "Inspireer je team met de nieuwste AI-trends, quick wins en real-life toepassingen.",
       icon: "🎤",
-      link: "/diensten/lezingen",
+      link: "/booking",
       cta: "Boek een lezing"
     },
     {
       title: "Workshops & Training",
       description: "Leer zelf hoe je AI en automation-tools inzet in je workflow.",
       icon: "🎯",
-      link: "/diensten/workshops",
+      link: "/booking",
       cta: "Plan een workshop"
     },
     {
       title: "Consultancy & Automatisering",
       description: "Laat processen slimmer verlopen via make.com, n8n en integraties met je bestaande systemen.",
       icon: "⚙️",
-      link: "/diensten/consultancy",
-      cta: "Start met een Audit"
+      link: "/booking",
+      cta: "Start een Audit"
     }
   ];
 

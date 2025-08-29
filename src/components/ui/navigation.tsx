@@ -29,7 +29,7 @@ const Navigation = () => {
             FAQ
           </Link>
           <Button variant="cta" size="sm" asChild>
-            <Link to="/contact">Plan een kennismaking</Link>
+            <Link to="/booking">Plan een kennismaking</Link>
           </Button>
         </div>
 

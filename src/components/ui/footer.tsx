@@ -54,7 +54,7 @@ const Footer = () => {
               <p>tech@paiconnect.nl</p>
               <p>+31 6 23 31 26 15</p>
               <div className="pt-2">
-                <Link to="/contact" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
+                <Link to="/booking" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
                   Plan een kennismaking →
                 </Link>
               </div>

@@ -162,7 +162,7 @@ const About = () => {
                       helpen groeien
                     </p>
                     <Button variant="hero" size="lg" asChild>
-                      <Link to="/contact">
+                      <Link to="/booking">
                         Plan een vrijblijvend kennismakingsgesprek
                       </Link>
                     </Button>

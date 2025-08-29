@@ -21,6 +21,7 @@ const Services = () => {
         "Praktische voorbeelden"
       ],
       cta: "Boek een lezing",
+      link: "/booking",
       price: "vanaf €1.500"
     },
     {
@@ -35,6 +36,7 @@ const Services = () => {
         "Automatisering – Intro make.com en n8n"
       ],
       cta: "Plan een workshop",
+      link: "/booking",
       price: "vanaf €2.000 per dagdeel"
     },
     {
@@ -122,11 +124,11 @@ const Services = () => {
                                     <p className="text-sm text-muted-foreground mb-1">Prijs</p>
                                     <p className="text-lg font-semibold text-primary">{service.price}</p>
                                   </div>
-                                  <Button variant="cta" asChild>
-                                    <Link to="/contact">
-                                      {service.cta}
-                                    </Link>
-                                  </Button>
+                                   <Button variant="cta" asChild>
+                                     <Link to={service.link || "/booking"}>
+                                       {service.cta}
+                                     </Link>
+                                   </Button>
                                 </div>
                               </CardContent>
                             </div>
