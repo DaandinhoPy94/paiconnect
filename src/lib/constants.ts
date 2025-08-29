@@ -1,1 +1,3 @@
-export const ABOUT_BG_URL = "https://drive.google.com/uc?export=view&id=1hrzkONCOp6tkJCx5BYyFeY__b4WqDVzJ";
+import aboutBackground from "@/assets/about-background.jpg";
+
+export const ABOUT_BG_URL = aboutBackground;
