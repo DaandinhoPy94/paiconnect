@@ -4,47 +4,66 @@ import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BANNER_LANGER_URL } from "@/lib/constants";
+
 const FAQ = () => {
-  const faqs = [{
-    question: "Wat kost een lezing of workshop?",
-    answer: "Lezingen vanaf €1.500, workshops vanaf €2.000. Alle prijzen zijn excl. BTW en afhankelijk van locatie, duur en specifieke wensen."
-  }, {
-    question: "Hoe snel kunnen jullie starten?",
-    answer: "Binnen 2 weken kunnen we meestal starten met lezingen of workshops. Voor consultancy projecten hangt dit af van de scope en complexiteit."
-  }, {
-    question: "Is dit alleen voor grote bedrijven?",
-    answer: "Nee, ook voor MKB. We passen onze aanpak aan op de grootte en behoeften van jouw organisatie. Van startups tot multinationals."
-  }, {
-    question: "Welke tools gebruiken jullie?",
-    answer: "We werken met make.com, n8n, ChatGPT, Notion, Slack, Google Workspace, Microsoft 365 en vele andere tools. De keuze hangt af van jouw bestaande systemen."
-  }, {
-    question: "Zijn workshops op maat?",
-    answer: "Ja, alle workshops worden afgestemd op jouw sector, team en specifieke uitdagingen. We maken gebruik van jouw eigen cases en voorbeelden."
-  }, {
-    question: "Hoe meet ik ROI?",
-    answer: "We meten tijdwinst, foutreductie en procesdoorlooptijd. Gemiddeld zien klanten 30% tijdsbesparing en 50% minder fouten binnen 3 maanden."
-  }, {
-    question: "Kan ik online een sessie boeken?",
-    answer: "Ja, via onze contactpagina kun je direct een kennismakingsgesprek inplannen. We bespreken dan jouw specifieke behoeften."
-  }, {
-    question: "Wat als we weinig AI-kennis hebben?",
-    answer: "Perfect! Dan beginnen we met een basis-sessie waarin we uitleggen wat AI wel en niet kan. We zorgen ervoor dat iedereen meekan."
-  }, {
-    question: "Zijn jullie GDPR-compliant?",
-    answer: "Ja, data blijft veilig. We werken volgens GDPR-richtlijnen en zorgen dat alle automatiseringen privacy-vriendelijk zijn opgezet."
-  }, {
-    question: "Kunnen jullie continu support leveren?",
-    answer: "Ja, via ons Run & Improve retainer programma leveren we doorlopende ondersteuning, optimalisatie en nieuwe automatiseringen."
-  }];
-  return <>
-      <SEOHead title="Veelgestelde vragen over AI consultancy – PaiConnect" description="Antwoorden op de meest gestelde vragen over AI lezingen, workshops en consultancy. Van prijzen tot implementatie." canonical="https://paiconnect.nl/faq" />
+  const faqs = [
+    {
+      question: "Wat kost een lezing of workshop?",
+      answer: "Lezingen vanaf €1.500, workshops vanaf €2.000. Alle prijzen zijn excl. BTW en afhankelijk van locatie, duur en specifieke wensen."
+    },
+    {
+      question: "Hoe snel kunnen jullie starten?",
+      answer: "Binnen 2 weken kunnen we meestal starten met lezingen of workshops. Voor consultancy projecten hangt dit af van de scope en complexiteit."
+    },
+    {
+      question: "Is dit alleen voor grote bedrijven?",
+      answer: "Nee, ook voor MKB. We passen onze aanpak aan op de grootte en behoeften van jouw organisatie. Van startups tot multinationals."
+    },
+    {
+      question: "Welke tools gebruiken jullie?",
+      answer: "We werken met make.com, n8n, ChatGPT, Notion, Slack, Google Workspace, Microsoft 365 en vele andere tools. De keuze hangt af van jouw bestaande systemen."
+    },
+    {
+      question: "Zijn workshops op maat?",
+      answer: "Ja, alle workshops worden afgestemd op jouw sector, team en specifieke uitdagingen. We maken gebruik van jouw eigen cases en voorbeelden."
+    },
+    {
+      question: "Hoe meet ik ROI?",
+      answer: "We meten tijdwinst, foutreductie en procesdoorlooptijd. Gemiddeld zien klanten 30% tijdsbesparing en 50% minder fouten binnen 3 maanden."
+    },
+    {
+      question: "Kan ik online een sessie boeken?",
+      answer: "Ja, via onze contactpagina kun je direct een kennismakingsgesprek inplannen. We bespreken dan jouw specifieke behoeften."
+    },
+    {
+      question: "Wat als we weinig AI-kennis hebben?",
+      answer: "Perfect! Dan beginnen we met een basis-sessie waarin we uitleggen wat AI wel en niet kan. We zorgen ervoor dat iedereen meekan."
+    },
+    {
+      question: "Zijn jullie GDPR-compliant?",
+      answer: "Ja, data blijft veilig. We werken volgens GDPR-richtlijnen en zorgen dat alle automatiseringen privacy-vriendelijk zijn opgezet."
+    },
+    {
+      question: "Kunnen jullie continu support leveren?",
+      answer: "Ja, via ons Run & Improve retainer programma leveren we doorlopende ondersteuning, optimalisatie en nieuwe automatiseringen."
+    }
+  ];
+
+  return (
+    <>
+      <SEOHead 
+        title="Veelgestelde vragen over AI consultancy – PaiConnect"
+        description="Antwoorden op de meest gestelde vragen over AI lezingen, workshops en consultancy. Van prijzen tot implementatie."
+        canonical="https://paiconnect.nl/faq"
+      />
       
       <div className="min-h-screen">
         <Navigation />
         
-        <div className="w-full bg-no-repeat bg-cover bg-center" style={{
-        backgroundImage: `url(${BANNER_LANGER_URL})`
-      }}>
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+        >
           <main>
             <section className="py-16 md:py-24">
               <div className="relative">
@@ -62,7 +81,12 @@ const FAQ = () => {
                     
                     <div className="max-w-4xl mx-auto">
                       <Accordion type="single" collapsible className="space-y-4">
-                        {faqs.map((faq, index) => <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg px-6">
+                        {faqs.map((faq, index) => (
+                          <AccordionItem 
+                            key={index} 
+                            value={`item-${index}`}
+                            className="border rounded-lg px-6"
+                          >
                             <AccordionTrigger className="text-left py-6 hover:no-underline">
                               <span className="font-semibold text-primary">
                                 {faq.question}
@@ -71,7 +95,8 @@ const FAQ = () => {
                             <AccordionContent className="pb-6 text-muted-foreground leading-relaxed">
                               {faq.answer}
                             </AccordionContent>
-                          </AccordionItem>)}
+                          </AccordionItem>
+                        ))}
                       </Accordion>
                       
                       <div className="mt-16 text-center">
@@ -80,10 +105,18 @@ const FAQ = () => {
                           Neem contact met ons op voor een persoonlijk gesprek over jouw AI-uitdagingen.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                          <a href="mailto:info@paiconnect.nl" className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
-                            📧 info@paiconnect.nl
+                          <a 
+                            href="mailto:info@paiconnect.nl"
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                          >
+                            📧 tech@paiconnect.nl
                           </a>
-                          <a href="tel:+31612345678" className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors">📞 +31 (0)6 23 31 26 15</a>
+                          <a 
+                            href="tel:+31623312615"
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+                          >
+                            📞 +31 (0)6 23 31 26 15
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -96,6 +129,8 @@ const FAQ = () => {
         
         <Footer />
       </div>
-    </>;
+    </>
+  );
 };
+
 export default FAQ;
