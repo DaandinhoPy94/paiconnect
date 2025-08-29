@@ -51,18 +51,23 @@ const Index = () => {
       />
       
       <div 
-        className="min-h-screen bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${backgroundBanner})` }}
+        className="min-h-screen relative"
       >
-        <Navigation />
-        <main>
-          <HeroSection />
-          <IntroSection />
-          <ServicesSection />
-          <ResultsSection />
-          <FAQPreview />
-        </main>
-        <Footer />
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{ backgroundImage: `url(${backgroundBanner})` }}
+        />
+        <div className="relative z-10">
+          <Navigation />
+          <main>
+            <HeroSection />
+            <IntroSection />
+            <ServicesSection />
+            <ResultsSection />
+            <FAQPreview />
+          </main>
+          <Footer />
+        </div>
       </div>
     </>
   );
