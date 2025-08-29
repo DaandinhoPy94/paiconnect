@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 const Footer = () => {
   return <footer className="bg-primary text-primary-foreground py-12">
       <div className="container">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
-                <span className="text-primary font-bold text-lg">P</span>
-              </div>
+              <img src={logo} alt="PaiConnect Logo" className="w-8 h-8" />
               <span className="text-xl font-bold">PaiConnect</span>
             </div>
             <p className="text-primary-foreground/80 text-sm">
