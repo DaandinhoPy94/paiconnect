@@ -3,6 +3,7 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const FAQ = () => {
   const faqs = [
@@ -59,62 +60,72 @@ const FAQ = () => {
       <div className="min-h-screen">
         <Navigation />
         
-        <main>
-          <section className="py-16 md:py-24">
-            <div className="container">
-              <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  Veelgestelde <span className="gradient-text">vragen</span>
-                </h1>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Alle antwoorden op vragen over onze AI-diensten, prijzen en implementatie
-                </p>
-              </div>
-              
-              <div className="max-w-4xl mx-auto">
-                <Accordion type="single" collapsible className="space-y-4">
-                  {faqs.map((faq, index) => (
-                    <AccordionItem 
-                      key={index} 
-                      value={`item-${index}`}
-                      className="border rounded-lg px-6"
-                    >
-                      <AccordionTrigger className="text-left py-6 hover:no-underline">
-                        <span className="font-semibold text-primary">
-                          {faq.question}
-                        </span>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-6 text-muted-foreground leading-relaxed">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-                
-                <div className="mt-16 text-center">
-                  <h2 className="text-2xl font-bold mb-4">Nog andere vragen?</h2>
-                  <p className="text-muted-foreground mb-6">
-                    Neem contact met ons op voor een persoonlijk gesprek over jouw AI-uitdagingen.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a 
-                      href="mailto:info@paiconnect.nl"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                    >
-                      📧 info@paiconnect.nl
-                    </a>
-                    <a 
-                      href="tel:+31612345678"
-                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
-                    >
-                      📞 +31 (0)6 12345678
-                    </a>
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+        >
+          <main>
+            <section className="py-16 md:py-24">
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+                <div className="relative">
+                  <div className="container">
+                    <div className="text-center mb-16">
+                      <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                        Veelgestelde <span className="gradient-text">vragen</span>
+                      </h1>
+                      <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                        Alle antwoorden op vragen over onze AI-diensten, prijzen en implementatie
+                      </p>
+                    </div>
+                    
+                    <div className="max-w-4xl mx-auto">
+                      <Accordion type="single" collapsible className="space-y-4">
+                        {faqs.map((faq, index) => (
+                          <AccordionItem 
+                            key={index} 
+                            value={`item-${index}`}
+                            className="border rounded-lg px-6"
+                          >
+                            <AccordionTrigger className="text-left py-6 hover:no-underline">
+                              <span className="font-semibold text-primary">
+                                {faq.question}
+                              </span>
+                            </AccordionTrigger>
+                            <AccordionContent className="pb-6 text-muted-foreground leading-relaxed">
+                              {faq.answer}
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                      
+                      <div className="mt-16 text-center">
+                        <h2 className="text-2xl font-bold mb-4">Nog andere vragen?</h2>
+                        <p className="text-muted-foreground mb-6">
+                          Neem contact met ons op voor een persoonlijk gesprek over jouw AI-uitdagingen.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                          <a 
+                            href="mailto:info@paiconnect.nl"
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                          >
+                            📧 info@paiconnect.nl
+                          </a>
+                          <a 
+                            href="tel:+31612345678"
+                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
+                          >
+                            📞 +31 (0)6 12345678
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </main>
+            </section>
+          </main>
+        </div>
         
         <Footer />
       </div>

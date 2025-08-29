@@ -5,6 +5,7 @@ import SEOHead from "@/components/ui/seo-head";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const Services = () => {
   const services = [
@@ -65,7 +66,7 @@ const Services = () => {
         
         <div
           className="w-full bg-no-repeat bg-cover bg-center"
-          style={{ backgroundImage: "url('https://drive.google.com/uc?export=view&id=1hrzkONCOp6tkJCx5BYyFeY__b4WqDVzJ')" }}
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
         >
           <main>
             <section className="py-16 md:py-24">
