@@ -11,7 +11,7 @@ interface SEOHeadProps {
 const SEOHead: React.FC<SEOHeadProps> = ({ 
   title, 
   description, 
-  canonical = "https://paiconnect.nl",
+  canonical = "https://paiconnect.tech",
   structuredData 
 }) => {
   return (
