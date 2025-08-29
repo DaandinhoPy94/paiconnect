@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-background via-accent/20 to-secondary/10 py-20 md:py-32">
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <section className="relative overflow-hidden network-pattern bg-gradient-to-br from-background via-accent/10 to-primary/5 py-20 md:py-32">
+      <div className="absolute inset-0 bg-grid-pattern opacity-3"></div>
       <div className="container relative">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
