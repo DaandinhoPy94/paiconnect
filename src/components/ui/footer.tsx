@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const Footer = () => {
-  return (
-    <footer className="bg-primary text-primary-foreground py-12">
+  return <footer className="bg-primary text-primary-foreground py-12">
       <div className="container">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
@@ -41,7 +39,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
             <div className="text-sm text-primary-foreground/80 space-y-2">
-              <p>info@paiconnect.nl</p>
+              <p>tech@paiconnect.nl</p>
               <p>+31 (0)6 12345678</p>
               <div className="pt-4">
                 <Link to="/contact" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
@@ -56,8 +54,6 @@ const Footer = () => {
           <p>&copy; 2024 PaiConnect. Alle rechten voorbehouden.</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
