@@ -22,6 +22,9 @@ const Navigation = () => {
           <Link to="/diensten" className="text-muted-foreground hover:text-foreground transition-colors">
             Diensten
           </Link>
+          <Link to="/ai-info" className="text-muted-foreground hover:text-foreground transition-colors">
+            AI Info
+          </Link>
           <Link to="/over" className="text-muted-foreground hover:text-foreground transition-colors">
             Over ons
           </Link>
