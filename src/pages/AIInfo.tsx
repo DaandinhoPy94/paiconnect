@@ -166,7 +166,7 @@ const AIInfo = () => {
         <main 
           className="relative bg-cover bg-center bg-no-repeat min-h-screen"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${aiInfoBackground})`
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${aiInfoBackground})`
           }}
         >
           {/* Hero Section */}
