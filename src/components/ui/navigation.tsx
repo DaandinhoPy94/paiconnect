@@ -10,7 +10,7 @@ const Navigation = () => {
         <Link to="/" className="flex items-center space-x-3">
           <div className="flex items-center space-x-3">
             <img 
-              src="/src/assets/logo-new.png" 
+              src="/src/assets/logo-new-updated.png" 
               alt="PaiConnect Logo" 
               className="w-8 h-8"
             />
