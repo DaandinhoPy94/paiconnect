@@ -174,7 +174,7 @@ const AIInfo = () => {
             <div className="container">
               <div className="text-center mb-16">
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  <span className="gradient-text">AI Landscape</span> Overzicht
+                  AI Landscape <span className="gradient-text">Overzicht</span>
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                   Ontdek de krachtigste AI-tools per categorie en blijf op de hoogte van de laatste ontwikkelingen in artificial intelligence
