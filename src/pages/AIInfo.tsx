@@ -170,7 +170,7 @@ const AIInfo = () => {
           }}
         >
           {/* Hero Section */}
-          <section className="py-8 md:py-12">
+          <section className="py-4 md:py-6">
             <div className="container">
               <div className="text-center mb-16">
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">
