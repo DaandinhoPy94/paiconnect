@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { CalendarIcon, Check, Clock, Euro, Mail, Phone, Building2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
@@ -85,8 +86,26 @@ const Booking = () => {
 
   const onSubmit = async (data: BookingFormData) => {
     try {
-      // Mock form submission
-      console.log("Form submission:", data);
+      const bookingData = {
+        name: data.name,
+        email: data.email,
+        type: data.type,
+        details: data.details || null,
+        date: data.date?.toISOString() || null,
+        company: data.company || null,
+        phone: data.phone || null,
+        source: 'custom_request',
+        payment_status: 'pending'
+      };
+
+      const { error } = await supabase
+        .from('bookings')
+        .insert([bookingData]);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
       
       toast({
         title: "Aanvraag verzonden",
@@ -96,6 +115,7 @@ const Booking = () => {
       // Redirect to success page
       navigate("/booking-success");
     } catch (error) {
+      console.error('Booking error:', error);
       toast({
         title: "Er ging iets mis",
         description: "Probeer het opnieuw of neem contact met ons op.",
@@ -107,6 +127,30 @@ const Booking = () => {
   const handlePackagePayment = async (packageId: string) => {
     setIsProcessingPayment(true);
     try {
+      const selectedPkg = predefinedPackages.find(pkg => pkg.id === packageId);
+      if (!selectedPkg) throw new Error('Package not found');
+
+      const bookingData = {
+        name: `Direct booking - ${selectedPkg.title}`,
+        email: 'info@paiconnect.nl', // You may want to collect this from user
+        type: [packageId],
+        details: `Direct booking for ${selectedPkg.title} package`,
+        selected_package: packageId,
+        price_cents: selectedPkg.price * 100,
+        source: 'direct_booking',
+        payment_status: 'completed'
+      };
+
+      // Save booking to database
+      const { error } = await supabase
+        .from('bookings')
+        .insert([bookingData]);
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
       // Mock iDEAL payment flow
       await new Promise(resolve => setTimeout(resolve, 2000));
       
@@ -117,6 +161,7 @@ const Booking = () => {
 
       navigate("/booking-success");
     } catch (error) {
+      console.error('Payment error:', error);
       toast({
         title: "Betaling mislukt",
         description: "Probeer het opnieuw.",
