@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const AIInfo = () => {
@@ -262,10 +264,14 @@ const AIInfo = () => {
 
               <div className="text-center mt-12">
                 <p className="text-muted-foreground">
-                  Wil je meer weten over hoe deze AI-ontwikkelingen jouw bedrijf kunnen helpen?{" "}
-                  <a href="/booking" className="text-primary hover:underline font-medium">
-                    Plan een kennismakingsgesprek
-                  </a>
+                  Wil je meer weten over hoe deze AI-ontwikkelingen jouw bedrijf kunnen helpen?
+                </p>
+                <div className="flex justify-center mt-4">
+                  <Button variant="tech" size="sm" asChild>
+                    <Link to="/booking">Plan een kennismakingsgesprek</Link>
+                  </Button>
+                </div>
+                <p className="text-muted-foreground text-center">
                 </p>
               </div>
             </div>

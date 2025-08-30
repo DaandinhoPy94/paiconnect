@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Video, Users, Camera, MessageSquare, Play } from "lucide-react";
+import { Button } from "./button";
 import logo from "@/assets/logo.png";
 
 const Footer = () => {
@@ -50,13 +51,17 @@ const Footer = () => {
           {/* Column 3 (Right): Contact information */}
           <div className="flex flex-col items-center md:items-end">
             <h3 className="text-base font-semibold mb-2 leading-tight">Contact</h3>
-            <div className="text-sm text-muted-foreground space-y-1 text-center md:text-right leading-snug">
-              <p>tech@paiconnect.nl</p>
-              <p>+31 6 23 31 26 15</p>
+            <div className="text-sm space-y-2 text-center md:text-right leading-snug">
+              <Button variant="tech" size="sm" asChild>
+                <a href="mailto:tech@paiconnect.nl">tech@paiconnect.nl</a>
+              </Button>
+              <Button variant="tech" size="sm" asChild>
+                <a href="tel:+31623312615">+31 6 23 31 26 15</a>
+              </Button>
               <div className="pt-2">
-                <Link to="/booking" className="inline-flex items-center text-secondary hover:text-secondary/80 transition-colors">
-                  Plan een kennismaking →
-                </Link>
+                <Button variant="tech" size="sm" asChild>
+                  <Link to="/booking">Plan een kennismaking →</Link>
+                </Button>
               </div>
             </div>
           </div>

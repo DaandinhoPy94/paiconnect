@@ -31,7 +31,7 @@ const Navigation = () => {
           <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
             FAQ
           </Link>
-          <Button variant="cta" size="sm" asChild>
+          <Button variant="tech" size="sm" asChild>
             <Link to="/booking">Plan een kennismaking</Link>
           </Button>
         </div>

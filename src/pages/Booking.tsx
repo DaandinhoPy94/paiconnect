@@ -194,7 +194,7 @@ const Booking = () => {
                           onClick={() => handlePackagePayment(pkg.id)}
                           disabled={isProcessingPayment}
                           className="w-full"
-                          variant="cta"
+                          variant="tech"
                         >
                           {isProcessingPayment ? "Verwerken..." : "Boek Nu met iDEAL"}
                         </Button>
@@ -384,7 +384,7 @@ const Booking = () => {
                           )}
                         />
 
-                        <Button type="submit" className="w-full" variant="cta">
+                        <Button type="submit" className="w-full" variant="tech">
                           Aanvraag Versturen
                         </Button>
                       </form>

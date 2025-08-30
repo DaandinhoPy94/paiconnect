@@ -124,7 +124,7 @@ const Services = () => {
                                     <p className="text-sm text-muted-foreground mb-1">Prijs</p>
                                     <p className="text-lg font-semibold text-primary">{service.price}</p>
                                   </div>
-                                   <Button variant="cta" asChild>
+                                   <Button variant="tech" asChild>
                                      <Link to={service.link || "/booking"}>
                                        {service.cta}
                                      </Link>

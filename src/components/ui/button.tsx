@@ -21,6 +21,7 @@ const buttonVariants = cva(
         hero: "bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:scale-105 hover:shadow-xl shadow-lg font-semibold",
         cta: "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg hover:scale-105 font-semibold border-2 border-primary/20",
         ai: "bg-gradient-to-r from-primary via-primary-glow to-secondary text-primary-foreground hover:scale-105 glow-effect font-semibold",
+        tech: "relative overflow-hidden bg-white/30 backdrop-blur-sm text-foreground font-bold border-gradient-neon tech-shimmer focus-visible:ring-blue-400 hover:shadow-lg transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",

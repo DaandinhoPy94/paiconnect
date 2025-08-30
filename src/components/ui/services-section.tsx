@@ -53,7 +53,7 @@ const ServicesSection = () => {
                 <p className="text-muted-foreground mb-6 flex-grow">
                   {service.description}
                 </p>
-                <Button variant="outline" asChild className="w-full">
+                <Button variant="tech" asChild className="w-full">
                   <Link to={service.link}>
                     {service.cta}
                   </Link>

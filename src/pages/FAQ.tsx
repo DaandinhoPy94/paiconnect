@@ -2,6 +2,7 @@ import React from "react";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
+import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BANNER_LANGER_URL } from "@/lib/constants";
 
@@ -105,18 +106,16 @@ const FAQ = () => {
                           Neem contact met ons op voor een persoonlijk gesprek over jouw AI-uitdagingen.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                          <a 
-                            href="mailto:info@paiconnect.nl"
-                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                          >
-                            📧 tech@paiconnect.nl
-                          </a>
-                          <a 
-                            href="tel:+31623312615"
-                            className="inline-flex items-center justify-center px-6 py-3 rounded-lg border border-input bg-background hover:bg-accent hover:text-accent-foreground transition-colors"
-                          >
-                            📞 +31 (0)6 23 31 26 15
-                          </a>
+                          <Button variant="tech" asChild>
+                            <a href="mailto:tech@paiconnect.nl">
+                              📧 tech@paiconnect.nl
+                            </a>
+                          </Button>
+                          <Button variant="tech" asChild>
+                            <a href="tel:+31623312615">
+                              📞 +31 (0)6 23 31 26 15
+                            </a>
+                          </Button>
                         </div>
                       </div>
                     </div>
