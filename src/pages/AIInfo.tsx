@@ -209,7 +209,7 @@ const AIInfo = () => {
                           <Card className="relative overflow-hidden bg-white/30 backdrop-blur-sm border-gradient-neon tech-shimmer hover:shadow-lg transition-all duration-300 cursor-pointer h-full">
                             <CardHeader>
                               <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center text-2xl">
+                                <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-2xl">
                                   {tool.icon}
                                 </div>
                                 <div>
