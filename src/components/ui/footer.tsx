@@ -58,11 +58,6 @@ const Footer = () => {
               <a href="tel:+31623312615" className="text-muted-foreground hover:text-secondary transition-colors block">
                 +31 6 23 31 26 15
               </a>
-              <div className="pt-2">
-                <Button variant="tech" size="sm" asChild>
-                  <Link to="/booking">Plan een kennismaking →</Link>
-                </Button>
-              </div>
             </div>
           </div>
         </div>
