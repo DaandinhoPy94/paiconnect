@@ -46,7 +46,7 @@ const FAQPreview = () => {
           </Accordion>
           
           <div className="text-center">
-            <Button variant="tech" asChild>
+            <Button variant="outline" asChild>
               <Link to="/faq">
                 Bekijk alle FAQ's
               </Link>

@@ -52,12 +52,12 @@ const Footer = () => {
           <div className="flex flex-col items-center md:items-end">
             <h3 className="text-base font-semibold mb-2 leading-tight">Contact</h3>
             <div className="text-sm space-y-2 text-center md:text-right leading-snug">
-              <a href="mailto:tech@paiconnect.nl" className="block text-muted-foreground hover:text-secondary transition-colors">
-                tech@paiconnect.nl
-              </a>
-              <a href="tel:+31623312615" className="block text-muted-foreground hover:text-secondary transition-colors">
-                +31 6 23 31 26 15
-              </a>
+              <Button variant="tech" size="sm" asChild>
+                <a href="mailto:tech@paiconnect.nl">tech@paiconnect.nl</a>
+              </Button>
+              <Button variant="tech" size="sm" asChild>
+                <a href="tel:+31623312615">+31 6 23 31 26 15</a>
+              </Button>
               <div className="pt-2">
                 <Button variant="tech" size="sm" asChild>
                   <Link to="/booking">Plan een kennismaking →</Link>
