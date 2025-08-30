@@ -161,7 +161,7 @@ const About = () => {
                       Laten we samen ontdekken hoe AI jouw organisatie kan
                       helpen groeien
                     </p>
-                    <Button variant="hero" size="lg" asChild>
+                    <Button variant="tech" size="lg" asChild>
                       <Link to="/booking">
                         Plan een vrijblijvend kennismakingsgesprek
                       </Link>

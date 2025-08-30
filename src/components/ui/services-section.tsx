@@ -24,7 +24,7 @@ const ServicesSection = () => {
       description: "Laat processen slimmer verlopen via make.com, n8n en integraties met je bestaande systemen.",
       icon: "⚙️",
       link: "/booking",
-      cta: "Start een Audit"
+      cta: "Start met een Audit"
     }
   ];
 

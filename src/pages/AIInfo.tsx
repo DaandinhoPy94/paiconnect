@@ -109,7 +109,7 @@ const AIInfo = () => {
       ]
     },
     {
-      category: "Code AI",
+      category: "Code/Automation",
       tools: [
         {
           name: "Cursor",
@@ -120,11 +120,6 @@ const AIInfo = () => {
           name: "Lovable",
           description: "AI-gedreven webapplicatie-ontwikkeling zonder complexe coding",
           icon: "❤️"
-        },
-        {
-          name: "GitHub Copilot",
-          description: "AI-assistent die real-time codevoorstellen en -completions biedt",
-          icon: "🛠️"
         },
         {
           name: "n8n",
