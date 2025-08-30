@@ -173,10 +173,10 @@ const AIInfo = () => {
           <section className="py-16 md:py-24">
             <div className="container">
               <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6">
                   <span className="gradient-text">AI Landscape</span> Overzicht
                 </h1>
-                <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                   Ontdek de krachtigste AI-tools per categorie en blijf op de hoogte van de laatste ontwikkelingen in artificial intelligence
                 </p>
               </div>
@@ -187,10 +187,10 @@ const AIInfo = () => {
           <section className="py-16 md:py-24">
             <div className="container">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Verschillende soorten AI
                 </h2>
-                <p className="text-xl text-white/80">
+                <p className="text-xl text-muted-foreground">
                   Van tekstgeneratie tot video-creatie: ontdek welke AI-tools het best passen bij jouw behoeften
                 </p>
               </div>
