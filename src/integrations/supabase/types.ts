@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_rate_limits: {
+        Row: {
+          booking_count: number | null
+          created_at: string | null
+          email: string
+          id: string
+          ip_address: unknown | null
+          window_start: string | null
+        }
+        Insert: {
+          booking_count?: number | null
+          created_at?: string | null
+          email: string
+          id?: string
+          ip_address?: unknown | null
+          window_start?: string | null
+        }
+        Update: {
+          booking_count?: number | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          ip_address?: unknown | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           company: string | null
@@ -62,12 +89,68 @@ export type Database = {
         }
         Relationships: []
       }
+      news_items: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_pinned: boolean
+          published_at: string
+          slug: string | null
+          source_url: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_pinned?: boolean
+          published_at?: string
+          slug?: string | null
+          source_url?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_pinned?: boolean
+          published_at?: string
+          slug?: string | null
+          source_url?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      check_booking_rate_limit: {
+        Args: { user_email: string; user_ip?: unknown }
+        Returns: boolean
+      }
+      is_valid_email: {
+        Args: { email: string }
+        Returns: boolean
+      }
+      is_valid_phone: {
+        Args: { phone: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
