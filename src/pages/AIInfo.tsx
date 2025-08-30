@@ -195,7 +195,7 @@ const AIInfo = () => {
                     <h3 className="text-2xl font-semibold text-primary mb-6">{category.category}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {category.tools.map((tool, toolIndex) => (
-                        <Card key={toolIndex} className="card-hover">
+                        <Card key={toolIndex} className="relative overflow-hidden bg-white/30 backdrop-blur-sm border-gradient-neon tech-shimmer hover:shadow-lg transition-all duration-300 cursor-pointer">
                           <CardHeader>
                             <div className="flex items-center gap-4">
                               <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center text-2xl">
