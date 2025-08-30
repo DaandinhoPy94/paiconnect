@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { CalendarIcon, Check, Clock, Euro, Mail, Phone, Building2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
@@ -85,20 +86,53 @@ const Booking = () => {
 
   const onSubmit = async (data: BookingFormData) => {
     try {
-      // Mock form submission
-      console.log("Form submission:", data);
+      const bookingData = {
+        name: data.name,
+        email: data.email,
+        type: data.type,
+        details: data.details || null,
+        date: data.date?.toISOString() || null,
+        company: data.company || null,
+        phone: data.phone || null,
+        source: 'custom_request',
+        payment_status: 'pending'
+      };
+
+      // Use secure edge function instead of direct database access
+      const { data: result, error } = await supabase.functions.invoke('secure-booking', {
+        body: { bookingData }
+      });
+
+      if (error) {
+        console.error('Function error:', error);
+        throw error;
+      }
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'Booking failed');
+      }
       
       toast({
         title: "Aanvraag verzonden",
-        description: "We nemen spoedig contact met u op.",
+        description: "We nemen binnen 24 uur contact met je op.",
       });
 
       // Redirect to success page
       navigate("/booking-success");
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Booking error:', error);
+      
+      let errorMessage = "Probeer het opnieuw of neem contact met ons op.";
+      
+      if (error.message?.includes('Rate limit') || error.message?.includes('Too many')) {
+        errorMessage = "Te veel aanvragen. Probeer het later opnieuw.";
+      } else if (error.message?.includes('Invalid') || error.message?.includes('validation')) {
+        errorMessage = "Controleer je gegevens en probeer opnieuw.";
+      }
+      
       toast({
         title: "Er ging iets mis",
-        description: "Probeer het opnieuw of neem contact met ons op.",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -107,8 +141,36 @@ const Booking = () => {
   const handlePackagePayment = async (packageId: string) => {
     setIsProcessingPayment(true);
     try {
+      const selectedPkg = predefinedPackages.find(pkg => pkg.id === packageId);
+      if (!selectedPkg) throw new Error('Package not found');
+
+      const bookingData = {
+        name: `Direct booking - ${selectedPkg.title}`,
+        email: 'info@paiconnect.nl', // You may want to collect this from user
+        type: [packageId],
+        details: `Direct booking for ${selectedPkg.title} package`,
+        selected_package: packageId,
+        price_cents: selectedPkg.price * 100,
+        source: 'direct_booking',
+        payment_status: 'completed'
+      };
+
       // Mock iDEAL payment flow
       await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Use secure edge function for booking
+      const { data: result, error } = await supabase.functions.invoke('secure-booking', {
+        body: { bookingData }
+      });
+
+      if (error) {
+        console.error('Function error:', error);
+        throw error;
+      }
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'Booking failed');
+      }
       
       toast({
         title: "Betaling succesvol",
@@ -116,10 +178,18 @@ const Booking = () => {
       });
 
       navigate("/booking-success");
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Payment error:', error);
+      
+      let errorMessage = "Probeer het opnieuw.";
+      
+      if (error.message?.includes('Rate limit') || error.message?.includes('Too many')) {
+        errorMessage = "Te veel aanvragen. Probeer het later opnieuw.";
+      }
+      
       toast({
         title: "Betaling mislukt",
-        description: "Probeer het opnieuw.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
