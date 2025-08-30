@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
@@ -6,7 +6,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Input validation schemas
 interface BookingData {
   name: string;
   email: string;
@@ -18,75 +17,7 @@ interface BookingData {
   selected_package?: string;
   price_cents?: number;
   source: string;
-  payment_status: string;
-}
-
-function validateBookingData(data: any): BookingData {
-  console.log('Validating booking data:', data);
-  
-  // Required fields validation
-  if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 2) {
-    throw new Error('Name must be at least 2 characters long');
-  }
-  
-  if (!data.email || typeof data.email !== 'string') {
-    throw new Error('Valid email is required');
-  }
-  
-  // Basic email format validation
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-  if (!emailRegex.test(data.email)) {
-    throw new Error('Invalid email format');
-  }
-  
-  if (!Array.isArray(data.type) || data.type.length === 0) {
-    throw new Error('At least one service type must be selected');
-  }
-  
-  if (!data.source || typeof data.source !== 'string') {
-    throw new Error('Source is required');
-  }
-  
-  if (!data.payment_status || typeof data.payment_status !== 'string') {
-    throw new Error('Payment status is required');
-  }
-  
-  // Optional phone validation
-  if (data.phone && typeof data.phone === 'string') {
-    const phoneRegex = /^[\+]?[\d\s\-\(\)]{8,15}$/;
-    if (!phoneRegex.test(data.phone)) {
-      throw new Error('Invalid phone format');
-    }
-  }
-  
-  // Sanitize and return validated data
-  return {
-    name: data.name.trim(),
-    email: data.email.toLowerCase().trim(),
-    type: data.type,
-    details: data.details?.trim() || null,
-    date: data.date || null,
-    company: data.company?.trim() || null,
-    phone: data.phone?.trim() || null,
-    selected_package: data.selected_package || null,
-    price_cents: data.price_cents || null,
-    source: data.source,
-    payment_status: data.payment_status
-  };
-}
-
-function getClientIP(request: Request): string {
-  // Try to get real IP from common headers
-  const xForwardedFor = request.headers.get('x-forwarded-for');
-  const xRealIP = request.headers.get('x-real-ip');
-  const cfConnectingIP = request.headers.get('cf-connecting-ip');
-  
-  if (xForwardedFor) {
-    // x-forwarded-for can contain multiple IPs, get the first one
-    return xForwardedFor.split(',')[0].trim();
-  }
-  
-  return xRealIP || cfConnectingIP || '0.0.0.0';
+  payment_status?: string;
 }
 
 serve(async (req) => {
@@ -96,63 +27,101 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Secure booking request received:', req.method);
+    console.log('Secure booking function called');
     
-    if (req.method !== 'POST') {
-      throw new Error('Method not allowed');
-    }
-
-    // Initialize Supabase client with service role for secure operations
+    // Initialize Supabase client with service role key for database access
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
 
-    // Parse and validate request body
-    const requestData = await req.json();
-    console.log('Request data received');
-    
-    const validatedData = validateBookingData(requestData);
-    console.log('Data validation passed');
+    const bookingData = await req.json() as BookingData;
     
     // Get client IP for rate limiting
-    const clientIP = getClientIP(req);
-    console.log('Client IP:', clientIP);
+    const clientIP = req.headers.get('x-forwarded-for') || 
+                     req.headers.get('x-real-ip') || 
+                     'unknown';
     
-    // Call secure booking function with rate limiting and validation
+    console.log('Processing booking for:', bookingData.email);
+    console.log('Client IP:', clientIP);
+
+    // Server-side validation
+    if (!bookingData.name || bookingData.name.trim().length < 2) {
+      throw new Error('Name must be at least 2 characters');
+    }
+    
+    if (!bookingData.email || !isValidEmail(bookingData.email)) {
+      throw new Error('Valid email is required');
+    }
+    
+    if (!bookingData.type || bookingData.type.length === 0) {
+      throw new Error('At least one service type must be selected');
+    }
+
+    if (bookingData.phone && !isValidPhone(bookingData.phone)) {
+      throw new Error('Invalid phone number format');
+    }
+
+    // Sanitize inputs
+    const sanitizedData = {
+      name: sanitizeString(bookingData.name),
+      email: bookingData.email.toLowerCase().trim(),
+      type: bookingData.type,
+      details: bookingData.details ? sanitizeString(bookingData.details) : null,
+      date: bookingData.date || null,
+      company: bookingData.company ? sanitizeString(bookingData.company) : null,
+      phone: bookingData.phone ? sanitizeString(bookingData.phone) : null,
+      selected_package: bookingData.selected_package || null,
+      price_cents: bookingData.price_cents || null,
+      source: bookingData.source,
+      payment_status: bookingData.payment_status || 'pending'
+    };
+
+    console.log('Calling secure booking function with sanitized data');
+
+    // Call the secure database function
     const { data: bookingId, error } = await supabase.rpc('create_secure_booking', {
-      booking_data: validatedData,
+      booking_data: sanitizedData,
       client_ip: clientIP
     });
 
     if (error) {
       console.error('Database error:', error);
       
-      // Handle specific error types
+      // Return user-friendly error messages
       if (error.message.includes('Rate limit exceeded')) {
         return new Response(
-          JSON.stringify({
-            error: 'Too many booking attempts. Please wait before trying again.',
-            code: 'RATE_LIMIT_EXCEEDED'
+          JSON.stringify({ 
+            error: 'Te veel aanvragen. Maximaal 5 boekingen per uur per e-mailadres.' 
           }),
           {
             status: 429,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
       }
       
-      if (error.message.includes('Invalid email') || 
-          error.message.includes('Invalid phone') ||
-          error.message.includes('Name must be')) {
+      if (error.message.includes('Invalid email format')) {
         return new Response(
-          JSON.stringify({
-            error: error.message,
-            code: 'VALIDATION_ERROR'
-          }),
+          JSON.stringify({ error: 'Ongeldig e-mailadres formaat.' }),
           {
             status: 400,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+      
+      if (error.message.includes('Invalid phone format')) {
+        return new Response(
+          JSON.stringify({ error: 'Ongeldig telefoonnummer formaat.' }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
       }
@@ -160,32 +129,49 @@ serve(async (req) => {
       throw error;
     }
 
-    console.log('Booking created successfully:', bookingId);
+    console.log('Booking created successfully with ID:', bookingId);
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        booking_id: bookingId,
-        message: 'Booking created successfully'
+      JSON.stringify({ 
+        success: true, 
+        bookingId,
+        message: 'Boeking succesvol aangemaakt'
       }),
       {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
 
   } catch (error) {
-    console.error('Error processing booking:', error);
+    console.error('Error in secure-booking function:', error);
     
     return new Response(
-      JSON.stringify({
-        error: error.message || 'Internal server error',
-        code: 'INTERNAL_ERROR'
+      JSON.stringify({ 
+        error: error.message || 'Er is een onverwachte fout opgetreden' 
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }
 });
+
+// Utility functions for validation and sanitization
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  return emailRegex.test(email);
+}
+
+function isValidPhone(phone: string): boolean {
+  const phoneRegex = /^[\+]?[\d\s\-\(\)]{8,15}$/;
+  return phoneRegex.test(phone);
+}
+
+function sanitizeString(input: string): string {
+  // Basic XSS prevention - remove HTML tags and trim
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<[^>]*>/g, '')
+    .trim();
+}

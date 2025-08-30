@@ -100,7 +100,7 @@ const Booking = () => {
 
       // Use secure edge function instead of direct database access
       const { data: result, error } = await supabase.functions.invoke('secure-booking', {
-        body: bookingData
+        body: { bookingData }
       });
 
       if (error) {
@@ -160,7 +160,7 @@ const Booking = () => {
 
       // Use secure edge function for booking
       const { data: result, error } = await supabase.functions.invoke('secure-booking', {
-        body: bookingData
+        body: { bookingData }
       });
 
       if (error) {
