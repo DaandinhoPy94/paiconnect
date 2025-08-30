@@ -236,10 +236,10 @@ const AIInfo = () => {
           <section className="py-16 md:py-24">
             <div className="container">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Laatste AI Nieuws
                 </h2>
-                <p className="text-xl text-white/80">
+                <p className="text-xl text-muted-foreground">
                   Blijf op de hoogte van de nieuwste ontwikkelingen in de AI-wereld
                 </p>
               </div>
@@ -270,7 +270,7 @@ const AIInfo = () => {
               </div>
 
               <div className="text-center mt-12">
-                <p className="text-white/80">
+                <p className="text-muted-foreground">
                   Wil je meer weten over hoe deze AI-ontwikkelingen jouw bedrijf kunnen helpen?
                 </p>
                 <div className="flex justify-center mt-4">
