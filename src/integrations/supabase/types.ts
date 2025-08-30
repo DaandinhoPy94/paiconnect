@@ -14,33 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      booking_rate_limits: {
-        Row: {
-          booking_count: number | null
-          created_at: string | null
-          email: string
-          id: string
-          ip_address: unknown | null
-          window_start: string | null
-        }
-        Insert: {
-          booking_count?: number | null
-          created_at?: string | null
-          email: string
-          id?: string
-          ip_address?: unknown | null
-          window_start?: string | null
-        }
-        Update: {
-          booking_count?: number | null
-          created_at?: string | null
-          email?: string
-          id?: string
-          ip_address?: unknown | null
-          window_start?: string | null
-        }
-        Relationships: []
-      }
       bookings: {
         Row: {
           company: string | null
