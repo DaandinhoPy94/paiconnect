@@ -143,6 +143,10 @@ export type Database = {
         Args: { user_email: string; user_ip?: unknown }
         Returns: boolean
       }
+      create_secure_booking: {
+        Args: { booking_data: Json; client_ip?: unknown }
+        Returns: string
+      }
       is_valid_email: {
         Args: { email: string }
         Returns: boolean

@@ -98,27 +98,41 @@ const Booking = () => {
         payment_status: 'pending'
       };
 
-      const { error } = await supabase
-        .from('bookings')
-        .insert([bookingData]);
+      // Use secure edge function instead of direct database access
+      const { data: result, error } = await supabase.functions.invoke('secure-booking', {
+        body: bookingData
+      });
 
       if (error) {
-        console.error('Supabase error:', error);
+        console.error('Function error:', error);
         throw error;
+      }
+
+      if (!result?.success) {
+        throw new Error(result?.error || 'Booking failed');
       }
       
       toast({
         title: "Aanvraag verzonden",
-        description: "We nemen spoedig contact met u op.",
+        description: "We nemen binnen 24 uur contact met je op.",
       });
 
       // Redirect to success page
       navigate("/booking-success");
-    } catch (error) {
+    } catch (error: any) {
       console.error('Booking error:', error);
+      
+      let errorMessage = "Probeer het opnieuw of neem contact met ons op.";
+      
+      if (error.message?.includes('Rate limit') || error.message?.includes('Too many')) {
+        errorMessage = "Te veel aanvragen. Probeer het later opnieuw.";
+      } else if (error.message?.includes('Invalid') || error.message?.includes('validation')) {
+        errorMessage = "Controleer je gegevens en probeer opnieuw.";
+      }
+      
       toast({
         title: "Er ging iets mis",
-        description: "Probeer het opnieuw of neem contact met ons op.",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -141,18 +155,22 @@ const Booking = () => {
         payment_status: 'completed'
       };
 
-      // Save booking to database
-      const { error } = await supabase
-        .from('bookings')
-        .insert([bookingData]);
+      // Mock iDEAL payment flow
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Use secure edge function for booking
+      const { data: result, error } = await supabase.functions.invoke('secure-booking', {
+        body: bookingData
+      });
 
       if (error) {
-        console.error('Supabase error:', error);
+        console.error('Function error:', error);
         throw error;
       }
 
-      // Mock iDEAL payment flow
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (!result?.success) {
+        throw new Error(result?.error || 'Booking failed');
+      }
       
       toast({
         title: "Betaling succesvol",
@@ -160,11 +178,18 @@ const Booking = () => {
       });
 
       navigate("/booking-success");
-    } catch (error) {
+    } catch (error: any) {
       console.error('Payment error:', error);
+      
+      let errorMessage = "Probeer het opnieuw.";
+      
+      if (error.message?.includes('Rate limit') || error.message?.includes('Too many')) {
+        errorMessage = "Te veel aanvragen. Probeer het later opnieuw.";
+      }
+      
       toast({
         title: "Betaling mislukt",
-        description: "Probeer het opnieuw.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
