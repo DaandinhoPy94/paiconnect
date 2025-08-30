@@ -43,10 +43,11 @@ serve(async (req) => {
     const requestBody = await req.json();
     const bookingData = requestBody.bookingData || requestBody;
     
-    // Get client IP for rate limiting
-    const clientIP = req.headers.get('x-forwarded-for') || 
-                     req.headers.get('x-real-ip') || 
-                     'unknown';
+    // Get client IP for rate limiting (extract first IP from x-forwarded-for)
+    const forwardedFor = req.headers.get('x-forwarded-for');
+    const clientIP = forwardedFor 
+      ? forwardedFor.split(',')[0].trim() 
+      : req.headers.get('x-real-ip') || '127.0.0.1';
     
     console.log('Processing booking for:', bookingData?.email);
     console.log('Request body structure:', Object.keys(requestBody));
