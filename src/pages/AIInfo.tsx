@@ -5,6 +5,7 @@ import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import aiInfoBackground from "@/assets/ai-info-background.jpg";
 
 const AIInfo = () => {
   const aiCategories = [
@@ -162,15 +163,20 @@ const AIInfo = () => {
       <div>
         <Navigation />
         
-        <main>
+        <main 
+          className="relative bg-cover bg-center bg-no-repeat min-h-screen"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${aiInfoBackground})`
+          }}
+        >
           {/* Hero Section */}
-          <section className="py-16 md:py-24 bg-gradient-subtle">
+          <section className="py-16 md:py-24">
             <div className="container">
               <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
                   <span className="gradient-text">AI Landscape</span> Overzicht
                 </h1>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                <p className="text-xl text-white/80 max-w-3xl mx-auto">
                   Ontdek de krachtigste AI-tools per categorie en blijf op de hoogte van de laatste ontwikkelingen in artificial intelligence
                 </p>
               </div>
@@ -181,10 +187,10 @@ const AIInfo = () => {
           <section className="py-16 md:py-24">
             <div className="container">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                   Verschillende soorten AI
                 </h2>
-                <p className="text-xl text-muted-foreground">
+                <p className="text-xl text-white/80">
                   Van tekstgeneratie tot video-creatie: ontdek welke AI-tools het best passen bij jouw behoeften
                 </p>
               </div>
@@ -227,13 +233,13 @@ const AIInfo = () => {
           </section>
 
           {/* News Section */}
-          <section className="py-16 md:py-24 bg-gradient-subtle">
+          <section className="py-16 md:py-24">
             <div className="container">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                   Laatste AI Nieuws
                 </h2>
-                <p className="text-xl text-muted-foreground">
+                <p className="text-xl text-white/80">
                   Blijf op de hoogte van de nieuwste ontwikkelingen in de AI-wereld
                 </p>
               </div>
@@ -264,7 +270,7 @@ const AIInfo = () => {
               </div>
 
               <div className="text-center mt-12">
-                <p className="text-muted-foreground">
+                <p className="text-white/80">
                   Wil je meer weten over hoe deze AI-ontwikkelingen jouw bedrijf kunnen helpen?
                 </p>
                 <div className="flex justify-center mt-4">
