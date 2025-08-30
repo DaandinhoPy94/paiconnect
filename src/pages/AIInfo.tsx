@@ -5,6 +5,7 @@ import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import aiInfoBackground from "@/assets/ai-info-background.jpg";
 
 const AIInfo = () => {
   const aiCategories = [
@@ -159,27 +160,32 @@ const AIInfo = () => {
         canonical="https://paiconnect.nl/ai-info"
       />
       
-      <div>
-        <Navigation />
-        
-        <main>
-          {/* Hero Section */}
-          <section className="py-16 md:py-24 bg-gradient-subtle">
-            <div className="container">
-              <div className="text-center mb-16">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  <span className="gradient-text">AI Landscape</span> Overzicht
-                </h1>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Ontdek de krachtigste AI-tools per categorie en blijf op de hoogte van de laatste ontwikkelingen in artificial intelligence
-                </p>
+      <div 
+        className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+        style={{ backgroundImage: `url(${aiInfoBackground})` }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="relative z-10">
+          <Navigation />
+          
+          <main>
+            {/* Hero Section */}
+            <section className="py-16 md:py-24">
+              <div className="container">
+                <div className="text-center mb-16">
+                  <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                    <span className="gradient-text">AI Landscape</span> Overzicht
+                  </h1>
+                  <p className="text-xl text-white/80 max-w-3xl mx-auto">
+                    Ontdek de krachtigste AI-tools per categorie en blijf op de hoogte van de laatste ontwikkelingen in artificial intelligence
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          {/* AI Categories Section */}
-          <section className="py-16 md:py-24">
-            <div className="container">
+            {/* AI Categories Section */}
+            <section className="py-16 md:py-24 bg-background/95 backdrop-blur-sm">
+              <div className="container">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Verschillende soorten AI
@@ -223,12 +229,12 @@ const AIInfo = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          </section>
+              </div>
+            </section>
 
-          {/* News Section */}
-          <section className="py-16 md:py-24 bg-gradient-subtle">
-            <div className="container">
+            {/* News Section */}
+            <section className="py-16 md:py-24 bg-background/90 backdrop-blur-sm">
+              <div className="container">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
                   Laatste AI Nieuws
@@ -275,11 +281,12 @@ const AIInfo = () => {
                 <p className="text-muted-foreground text-center">
                 </p>
               </div>
-            </div>
-          </section>
-        </main>
-        
-        <Footer />
+              </div>
+            </section>
+          </main>
+          
+          <Footer />
+        </div>
       </div>
     </>
   );
