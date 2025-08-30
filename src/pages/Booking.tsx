@@ -140,13 +140,37 @@ const Booking = () => {
 
   const handlePackagePayment = async (packageId: string) => {
     setIsProcessingPayment(true);
+    
+    // First, prompt user for basic details needed for direct booking
+    const name = prompt('Uw naam (verplicht):');
+    if (!name || name.trim().length < 2) {
+      toast({
+        title: "Naam is verplicht",
+        description: "Voer uw volledige naam in om door te gaan.",
+        variant: "destructive",
+      });
+      setIsProcessingPayment(false);
+      return;
+    }
+    
+    const email = prompt('Uw emailadres (verplicht):');
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Email is verplicht",
+        description: "Voer een geldig emailadres in om door te gaan.",
+        variant: "destructive",
+      });
+      setIsProcessingPayment(false);
+      return;
+    }
+    
     try {
       const selectedPkg = predefinedPackages.find(pkg => pkg.id === packageId);
       if (!selectedPkg) throw new Error('Package not found');
 
       const bookingData = {
-        name: `Direct booking - ${selectedPkg.title}`,
-        email: 'info@paiconnect.nl', // You may want to collect this from user
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
         type: [packageId],
         details: `Direct booking for ${selectedPkg.title} package`,
         selected_package: packageId,

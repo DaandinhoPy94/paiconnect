@@ -40,14 +40,16 @@ serve(async (req) => {
       },
     });
 
-    const bookingData = await req.json() as BookingData;
+    const requestBody = await req.json();
+    const bookingData = requestBody.bookingData || requestBody;
     
     // Get client IP for rate limiting
     const clientIP = req.headers.get('x-forwarded-for') || 
                      req.headers.get('x-real-ip') || 
                      'unknown';
     
-    console.log('Processing booking for:', bookingData.email);
+    console.log('Processing booking for:', bookingData?.email);
+    console.log('Request body structure:', Object.keys(requestBody));
     console.log('Client IP:', clientIP);
 
     // Server-side validation
