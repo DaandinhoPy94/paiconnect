@@ -1,23 +1,34 @@
 import posthog from 'posthog-js';
 
-// Initialize PostHog
+// Defer analytics initialization to avoid blocking critical rendering
 export const initAnalytics = () => {
   if (typeof window !== 'undefined') {
-    posthog.init('phc_your_project_api_key_here', {
-      api_host: 'https://app.posthog.com',
-      loaded: (posthog) => {
-        if (import.meta.env.DEV) posthog.debug();
-      },
-      capture_pageview: false, // We'll handle this manually
-      capture_pageleave: true,
-      session_recording: {
-        maskAllInputs: true, // Privacy compliance
-        maskInputOptions: {
-          password: true,
-          email: true,
+    // Use requestIdleCallback to defer initialization until browser is idle
+    const initPostHog = () => {
+      posthog.init('phc_your_project_api_key_here', {
+        api_host: 'https://app.posthog.com',
+        loaded: (posthog) => {
+          if (import.meta.env.DEV) posthog.debug();
+        },
+        capture_pageview: false, // We'll handle this manually
+        capture_pageleave: true,
+        session_recording: {
+          maskAllInputs: true, // Privacy compliance
+          maskInputOptions: {
+            password: true,
+            email: true,
+          }
         }
-      }
-    });
+      });
+    };
+
+    // Defer analytics loading to not block critical resources
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initPostHog, { timeout: 2000 });
+    } else {
+      // Fallback for older browsers
+      setTimeout(initPostHog, 1000);
+    }
   }
 };
 
