@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,7 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { analytics, initSessionTracking } from "@/lib/analytics";
 import Index from "./pages/Index";
 
-// Lazy load non-critical pages for better performance
+// Lazy load non-critical pages for better performance  
 const Services = lazy(() => import("./pages/Services"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const About = lazy(() => import("./pages/About"));
@@ -18,13 +18,15 @@ const AIInfo = lazy(() => import("./pages/AIInfo"));
 const AIToolDetail = lazy(() => import("./pages/AIToolDetail"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-// Lazy load analytics for better performance
-const AnalyticsLoader = lazy(() => import("@/lib/analytics").then(module => ({
-  default: () => {
-    module.initAnalytics();
-    return null;
-  }
-})));
+// Initialize analytics synchronously to avoid loading issues
+const AnalyticsLoader = () => {
+  useEffect(() => {
+    import("@/lib/analytics").then(module => {
+      module.initAnalytics();
+    });
+  }, []);
+  return null;
+};
 
 const queryClient = new QueryClient();
 
@@ -66,9 +68,7 @@ const App = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-          <Suspense fallback={null}>
-            <AnalyticsLoader />
-          </Suspense>
+          <AnalyticsLoader />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
