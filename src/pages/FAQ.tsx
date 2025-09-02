@@ -57,6 +57,7 @@ const FAQ = () => {
         title="AI consultancy FAQ: lectures, workshops & automation costs"
         description="Common questions about PaiConnect AI services: pricing for lectures & workshops, workflow automation ROI, implementation timelines & business results."
         canonical="https://paiconnect.nl/faq"
+        ogDescription="AI consultancy FAQ: pricing, ROI, timelines & results. Get answers to your AI implementation questions."
         structuredData={structuredData}
       />
       

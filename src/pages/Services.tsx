@@ -125,6 +125,7 @@ const Services = () => {
         title="AI lecture, workshop & automation services - PaiConnect"
         description="Professional AI services: inspiring lectures, practical workshops & workflow automation consultancy. Transform your business with proven AI implementation."
         canonical="https://paiconnect.nl/diensten"
+        ogDescription="Professional AI lectures, workshops & automation. Transform your business with proven implementation."
         structuredData={structuredData}
       />
       

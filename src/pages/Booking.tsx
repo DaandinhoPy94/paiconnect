@@ -237,6 +237,7 @@ const Booking = () => {
         title="Book AI lecture or workshop - PaiConnect consultation"
         description="Schedule your AI consultation: book inspiring lectures, hands-on workshops or workflow automation audit. Free intake call with PaiConnect experts."
         canonical="https://paiconnect.nl/boeken"
+        ogDescription="Book your AI consultation: lectures, workshops or automation audit. Free intake with experts."
         structuredData={structuredData}
       />
       

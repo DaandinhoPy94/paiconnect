@@ -11,8 +11,10 @@ const BookingSuccess = () => {
   return (
     <>
       <SEOHead
-        title="Boeking Bevestigd - PaiConnect"
-        description="Bedankt voor uw boeking. Wij nemen spoedig contact met u op."
+        title="Booking Confirmed - PaiConnect"
+        description="Thank you for your booking. We will contact you soon."
+        canonical="https://paiconnect.nl/booking-success"
+        noindex={true}
       />
       
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">

@@ -48,6 +48,7 @@ const About = () => {
         title="About PaiConnect - AI consultancy experts in Netherlands"
         description="Meet Daan van der Ster & PaiConnect team. 100+ companies transformed with our AI lecture, workshop & workflow automation expertise since 2019."
         canonical="https://paiconnect.nl/over"
+        ogDescription="Meet PaiConnect: 100+ companies transformed with AI expertise. Founder Daan van der Ster & expert team."
         structuredData={structuredData}
       />
 

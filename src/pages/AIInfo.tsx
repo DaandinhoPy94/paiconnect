@@ -155,9 +155,10 @@ const AIInfo = () => {
   return (
     <>
       <SEOHead 
-        title="AI Info: Overzicht van AI-tools en laatste nieuws – PaiConnect"
-        description="Ontdek de nieuwste AI-tools per categorie en blijf op de hoogte van het laatste AI-nieuws en ontwikkelingen."
+        title="AI tools overview & latest news - PaiConnect insights"
+        description="Discover the most powerful AI tools by category and stay updated on the latest developments in artificial intelligence. From LLMs to automation."
         canonical="https://paiconnect.nl/ai-info"
+        ogDescription="Discover powerful AI tools by category & latest AI news. From ChatGPT to workflow automation insights."
       />
       
       <div>

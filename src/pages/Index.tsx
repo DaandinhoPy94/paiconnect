@@ -71,6 +71,7 @@ const Index = () => {
         title="AI lecture, workshop & workflow automation - PaiConnect"
         description="Dutch AI consultancy: practical lectures, hands-on workshops & workflow automation. Help businesses automate, accelerate & advance with proven results."
         canonical="https://paiconnect.nl"
+        ogDescription="Dutch AI experts helping businesses automate, accelerate & advance with proven AI implementation results."
         structuredData={structuredData}
       />
       
