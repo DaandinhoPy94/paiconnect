@@ -7,7 +7,6 @@ import ResultsSection from "@/components/ui/results-section";
 import FAQPreview from "@/components/ui/faq-preview";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
-import backgroundBanner from "@/assets/background-banner.jpg";
 
 const Index = () => {
   const structuredData = {
@@ -75,24 +74,16 @@ const Index = () => {
         structuredData={structuredData}
       />
       
-      <div 
-        className="min-h-screen relative"
-      >
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
-          style={{ backgroundImage: `url(${backgroundBanner})` }}
-        />
-        <div className="relative z-10">
-          <Navigation />
-          <main>
-            <Hero />
-            <IntroSection />
-            <ServicesSection />
-            <ResultsSection />
-            <FAQPreview />
-          </main>
-          <Footer />
-        </div>
+      <div className="min-h-screen relative">
+        <Navigation />
+        <main>
+          <Hero />
+          <IntroSection />
+          <ServicesSection />
+          <ResultsSection />
+          <FAQPreview />
+        </main>
+        <Footer />
       </div>
     </>
   );

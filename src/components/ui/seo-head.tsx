@@ -34,6 +34,15 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <meta name="color-scheme" content="light dark" />
       
+      {/* Optimize font loading */}
+      <style>{`
+        @font-face {
+          font-family: 'Inter';
+          font-display: swap;
+          src: local('Inter');
+        }
+      `}</style>
+      
       {/* Indexing control */}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
       

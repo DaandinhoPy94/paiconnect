@@ -194,14 +194,15 @@ const Booking = () => {
         }
       };
 
-      console.log('Submitting booking with metadata:', bookingData);
+      // Remove console.log in production
 
       const { data: result, error } = await supabase.functions.invoke('secure-booking', {
         body: { bookingData }
       });
 
       if (error) {
-        console.error('Function error:', error);
+        // Log only in development
+        if (import.meta.env.DEV) console.error('Function error:', error);
         throw error;
       }
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
 import { analytics } from "@/lib/analytics";
+import LogoSVG from "./logo-svg";
 
 const Navigation = () => {
   return (
@@ -10,11 +11,7 @@ const Navigation = () => {
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-3">
           <div className="flex items-center space-x-3">
-            <img 
-              src="/src/assets/logo-new-updated.png" 
-              alt="PaiConnect Logo" 
-              className="w-8 h-8"
-            />
+            <LogoSVG className="w-8 h-8" />
             <span className="text-xl font-bold gradient-text">PaiConnect</span>
           </div>
         </Link>
