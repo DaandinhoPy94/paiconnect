@@ -26,15 +26,32 @@ export default defineConfig(({ mode }) => ({
     cssTarget: 'chrome80',
     // Performance optimizations
     rollupOptions: {
+      // Enhanced tree shaking
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        tryCatchDeoptimization: false
+      },
       output: {
         manualChunks: (id) => {
-          // Vendor chunks
+          // Vendor chunks with more granular splitting
           if (id.includes('node_modules')) {
             if (id.includes('react') || id.includes('react-dom')) {
               return 'react-vendor';
             }
             if (id.includes('@radix-ui')) {
-              return 'radix-ui';
+              // Split radix components by type for better tree shaking
+              if (id.includes('accordion') || id.includes('collapsible')) {
+                return 'radix-layout';
+              }
+              if (id.includes('dialog') || id.includes('popover') || id.includes('dropdown')) {
+                return 'radix-overlay';
+              }
+              return 'radix-core';
+            }
+            if (id.includes('lucide-react')) {
+              // Separate chunk for icons to allow better tree shaking
+              return 'icons';
             }
             if (id.includes('posthog') || id.includes('analytics')) {
               return 'analytics';
@@ -42,13 +59,16 @@ export default defineConfig(({ mode }) => ({
             if (id.includes('react-router')) {
               return 'router';
             }
-            if (id.includes('lucide') || id.includes('icons')) {
-              return 'icons';
+            if (id.includes('react-hook-form') || id.includes('zod')) {
+              return 'forms';
+            }
+            if (id.includes('date-fns') || id.includes('class-variance-authority') || id.includes('clsx')) {
+              return 'utils';
             }
             return 'vendor';
           }
           
-          // Page chunks
+          // Page chunks for better code splitting
           if (id.includes('src/pages/')) {
             const pageName = id.split('/pages/')[1]?.split('.')[0];
             return `page-${pageName?.toLowerCase()}`;
@@ -80,6 +100,11 @@ export default defineConfig(({ mode }) => ({
       compress: {
         drop_console: mode === 'production',
         drop_debugger: true,
+        pure_funcs: ['console.log'], // Remove console.log calls
+        unused: true, // Remove unused code
+      },
+      mangle: {
+        safari10: true, // Fix Safari 10 issues
       },
     },
   },
