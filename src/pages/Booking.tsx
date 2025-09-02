@@ -174,16 +174,18 @@ const Booking = () => {
       const storedParams = sessionStorage.getItem('bookingParams');
       const urlParams = storedParams ? JSON.parse(storedParams) : {};
       
+      // Normalize data for submission
       const bookingData = {
-        name: data.name,
-        email: data.email,
-        type: data.type,
+        name: data.name.trim(),
+        email: data.email.toLowerCase().trim(),
+        type: Array.isArray(data.type) ? data.type : [data.type], // Ensure array format
         details: data.details || `Gewenste datum: ${data.preferredDate || 'Niet opgegeven'}`,
-        company: data.company || null,
-        phone: data.phone || null,
+        company: data.company?.trim() || null,
+        phone: data.phone?.trim() || null,
+        date: data.preferredDate ? new Date(data.preferredDate).toISOString() : null, // Convert to ISO string
         source: urlParams.offer || 'booking_form',
         payment_status: 'pending',
-        // Store additional metadata in details field
+        // Store additional metadata
         metadata: {
           utm_source: urlParams.utm_source,
           utm_medium: urlParams.utm_medium,
@@ -194,20 +196,23 @@ const Booking = () => {
         }
       };
 
-      // Remove console.log in production
+      console.log('Submitting booking data:', bookingData);
 
       const { data: result, error } = await supabase.functions.invoke('secure-booking', {
         body: { bookingData }
       });
 
+      // Handle edge function errors
       if (error) {
-        // Log only in development
-        if (import.meta.env.DEV) console.error('Function error:', error);
-        throw error;
+        console.error('Edge function error:', error);
+        throw new Error(error.message || 'Network error occurred');
       }
 
-      if (!result?.success) {
-        throw new Error(result?.error || 'Booking failed');
+      // Handle API response errors
+      if (!result?.ok) {
+        const errorMessage = result?.message || 'Booking submission failed';
+        console.error('API response error:', result);
+        throw new Error(errorMessage);
       }
       
       // Track successful submission
@@ -227,27 +232,44 @@ const Booking = () => {
 
       navigate("/booking-success");
     } catch (error: any) {
-      console.error('Booking error:', error);
+      console.error('Booking submission error:', error);
       
-      // Track failed submission
+      // Extract error details for better handling
+      const errorMessage = error.message || 'Unknown error';
+      const isValidationError = errorMessage.includes('validation') || 
+                               errorMessage.includes('Naam moet') ||
+                               errorMessage.includes('e-mailadres') ||
+                               errorMessage.includes('service type');
+      const isRateLimit = errorMessage.includes('Rate limit') || 
+                         errorMessage.includes('Te veel aanvragen');
+      const isNetworkError = errorMessage.includes('network') || 
+                            errorMessage.includes('fetch');
+      
+      // Track failed submission with specific error type
       analytics.bookingSubmitFail(
-        error.message?.includes('validation') ? 'validation' : 
-        error.message?.includes('network') ? 'network' : 'server',
+        isValidationError ? 'validation' : 
+        isRateLimit ? 'rate_limit' :
+        isNetworkError ? 'network' : 'server',
         currentStep,
         data.type || []
       );
       
-      let errorMessage = "Probeer het opnieuw of neem contact met ons op.";
+      // Provide user-friendly error messages
+      let userMessage = "Er ging iets mis. Probeer het opnieuw of neem contact met ons op.";
       
-      if (error.message?.includes('Rate limit') || error.message?.includes('Too many')) {
-        errorMessage = "Te veel aanvragen. Probeer het later opnieuw.";
-      } else if (error.message?.includes('Invalid') || error.message?.includes('validation')) {
-        errorMessage = "Controleer je gegevens en probeer opnieuw.";
+      if (isRateLimit) {
+        userMessage = "Te veel aanvragen. Probeer het later opnieuw.";
+      } else if (isValidationError) {
+        userMessage = "Controleer je gegevens en probeer opnieuw.";
+      } else if (isNetworkError) {
+        userMessage = "Verbindingsprobleem. Controleer je internetverbinding en probeer opnieuw.";
+      } else if (errorMessage.includes('database')) {
+        userMessage = "Tijdelijk probleem met onze servers. Probeer het over een paar minuten opnieuw.";
       }
       
       toast({
         title: "Er ging iets mis",
-        description: errorMessage,
+        description: userMessage,
         variant: "destructive",
       });
     } finally {

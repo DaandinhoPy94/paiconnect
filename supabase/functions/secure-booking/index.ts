@@ -55,33 +55,73 @@ serve(async (req) => {
 
     // Server-side validation
     if (!bookingData.name || bookingData.name.trim().length < 2) {
-      throw new Error('Name must be at least 2 characters');
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          message: 'Naam moet minimaal 2 karakters bevatten',
+          detail: 'validation_error'
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
     
     if (!bookingData.email || !isValidEmail(bookingData.email)) {
-      throw new Error('Valid email is required');
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          message: 'Geldig e-mailadres is verplicht',
+          detail: 'validation_error'
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
     
-    if (!bookingData.type || bookingData.type.length === 0) {
-      throw new Error('At least one service type must be selected');
+    if (!bookingData.type || !Array.isArray(bookingData.type) || bookingData.type.length === 0) {
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          message: 'Minimaal één service type moet geselecteerd zijn',
+          detail: 'validation_error'
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     if (bookingData.phone && !isValidPhone(bookingData.phone)) {
-      throw new Error('Invalid phone number format');
+      return new Response(
+        JSON.stringify({ 
+          ok: false, 
+          message: 'Ongeldig telefoonnummer formaat',
+          detail: 'validation_error'
+        }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
-    // Sanitize inputs
+    // Sanitize inputs and prepare data
     const sanitizedData = {
       name: sanitizeString(bookingData.name),
       email: bookingData.email.toLowerCase().trim(),
-      type: bookingData.type,
+      type: Array.isArray(bookingData.type) ? bookingData.type : [bookingData.type],
       details: bookingData.details ? sanitizeString(bookingData.details) : null,
-      date: bookingData.date || null,
+      date: bookingData.date ? new Date(bookingData.date).toISOString() : null,
       company: bookingData.company ? sanitizeString(bookingData.company) : null,
       phone: bookingData.phone ? sanitizeString(bookingData.phone) : null,
       selected_package: bookingData.selected_package || null,
       price_cents: bookingData.price_cents || null,
-      source: bookingData.source,
+      source: bookingData.source || 'booking_form',
       payment_status: bookingData.payment_status || 'pending'
     };
 
@@ -96,11 +136,13 @@ serve(async (req) => {
     if (error) {
       console.error('Database error:', error);
       
-      // Return user-friendly error messages
+      // Return specific error messages based on error type
       if (error.message.includes('Rate limit exceeded')) {
         return new Response(
           JSON.stringify({ 
-            error: 'Te veel aanvragen. Maximaal 5 boekingen per uur per e-mailadres.' 
+            ok: false,
+            message: 'Te veel aanvragen. Maximaal 5 boekingen per uur per e-mailadres.',
+            detail: 'rate_limit_error'
           }),
           {
             status: 429,
@@ -111,7 +153,11 @@ serve(async (req) => {
       
       if (error.message.includes('Invalid email format')) {
         return new Response(
-          JSON.stringify({ error: 'Ongeldig e-mailadres formaat.' }),
+          JSON.stringify({ 
+            ok: false,
+            message: 'Ongeldig e-mailadres formaat.',
+            detail: 'validation_error'
+          }),
           {
             status: 400,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -121,7 +167,39 @@ serve(async (req) => {
       
       if (error.message.includes('Invalid phone format')) {
         return new Response(
-          JSON.stringify({ error: 'Ongeldig telefoonnummer formaat.' }),
+          JSON.stringify({ 
+            ok: false,
+            message: 'Ongeldig telefoonnummer formaat.',
+            detail: 'validation_error'
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
+      if (error.message.includes('Name must be at least')) {
+        return new Response(
+          JSON.stringify({ 
+            ok: false,
+            message: 'Naam moet minimaal 2 karakters bevatten.',
+            detail: 'validation_error'
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
+      }
+
+      if (error.message.includes('At least one service type')) {
+        return new Response(
+          JSON.stringify({ 
+            ok: false,
+            message: 'Minimaal één service type moet geselecteerd zijn.',
+            detail: 'validation_error'
+          }),
           {
             status: 400,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -129,15 +207,26 @@ serve(async (req) => {
         );
       }
       
-      throw error;
+      // Generic database error
+      return new Response(
+        JSON.stringify({ 
+          ok: false,
+          message: 'Er is een probleem opgetreden bij het opslaan. Probeer het opnieuw.',
+          detail: 'database_error'
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     console.log('Booking created successfully with ID:', bookingId);
 
     return new Response(
       JSON.stringify({ 
-        success: true, 
-        bookingId,
+        ok: true,
+        id: bookingId,
         message: 'Boeking succesvol aangemaakt'
       }),
       {
@@ -150,7 +239,9 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Er is een onverwachte fout opgetreden' 
+        ok: false,
+        message: 'Er is een onverwachte fout opgetreden. Probeer het opnieuw.',
+        detail: 'unexpected_error'
       }),
       {
         status: 500,
