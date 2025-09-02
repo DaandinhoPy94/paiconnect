@@ -55,12 +55,77 @@ const Services = () => {
     }
   ];
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "AI Consultancy and Training",
+    "provider": {
+      "@type": "Organization",
+      "name": "PaiConnect",
+      "url": "https://paiconnect.nl"
+    },
+    "areaServed": "Netherlands",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "AI Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI Lectures & Keynotes",
+            "description": "Inspiring presentations about AI applications for organizations. Concrete overview of quick wins, smart tools and sector impact.",
+            "serviceType": "Educational Lecture"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "1500",
+            "priceCurrency": "EUR",
+            "description": "Starting from €1,500"
+          }
+        },
+        {
+          "@type": "Offer", 
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI Workshops & Training",
+            "description": "Hands-on workshops where employees learn to actually apply AI. From ChatGPT to automation with make.com: participants get tools, prompts and skills that are immediately usable.",
+            "serviceType": "Training Workshop"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification", 
+            "price": "2000",
+            "priceCurrency": "EUR",
+            "description": "Starting from €2,000 per half-day"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "AI Consultancy & Automation",
+            "description": "Analysis and improvement of business processes with and without AI. From workflow automation to integrations and dashboards.",
+            "serviceType": "Business Consultancy"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "120", 
+            "priceCurrency": "EUR",
+            "unitText": "per hour",
+            "description": "Starting from €120/hour or project price"
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <>
       <SEOHead 
         title="AI lecture, workshop & automation services - PaiConnect"
         description="Professional AI services: inspiring lectures, practical workshops & workflow automation consultancy. Transform your business with proven AI implementation."
         canonical="https://paiconnect.nl/diensten"
+        structuredData={structuredData}
       />
       
       <div>

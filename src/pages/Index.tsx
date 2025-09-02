@@ -17,28 +17,52 @@ const Index = () => {
     "url": "https://paiconnect.nl",
     "logo": "https://paiconnect.nl/logo.png",
     "sameAs": ["https://www.linkedin.com/company/paiconnect"],
-    "description": "PaiConnect helpt bedrijven sneller vooruit met AI via lezingen, workshops en consultancy. Automate. Accelerate. Advance.",
+    "description": "PaiConnect helps businesses move forward faster with AI through lectures, workshops and consultancy. Automate. Accelerate. Advance.",
+    "slogan": "Automate. Accelerate. Advance.",
+    "areaServed": "Netherlands",
     "founder": {
       "@type": "Person",
       "name": "Daan van der Ster"
     },
-    "service": [
-      {
-        "@type": "Service",
-        "name": "AI Lezingen & Keynotes",
-        "description": "Inspirerende lezingen over AI en quick wins voor bedrijven."
-      },
-      {
-        "@type": "Service",
-        "name": "AI Workshops & Training",
-        "description": "Hands-on trainingen om AI praktisch in te zetten."
-      },
-      {
-        "@type": "Service",
-        "name": "AI Consultancy & Automatisering",
-        "description": "Procesoptimalisatie met AI, make.com en n8n."
-      }
-    ]
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+31-6-23312615",
+      "email": "tech@paiconnect.nl",
+      "contactType": "customer service"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "AI Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI Lectures & Keynotes",
+            "description": "Inspiring lectures about AI and quick wins for businesses.",
+            "serviceType": "Educational Event"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "AI Workshops & Training",
+            "description": "Hands-on training to practically implement AI.",
+            "serviceType": "Training Workshop"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI Consultancy & Automation", 
+            "description": "Process optimization with AI, make.com and n8n.",
+            "serviceType": "Business Consultancy"
+          }
+        }
+      ]
+    }
   };
 
   return (

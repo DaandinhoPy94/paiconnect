@@ -9,12 +9,46 @@ import { BANNER_LANGER_URL } from "@/lib/constants";
 import daanProfile from "@/assets/daan-profile.jpg";
 
 const About = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization", 
+    "name": "PaiConnect",
+    "url": "https://paiconnect.nl",
+    "logo": "https://paiconnect.nl/logo.png",
+    "description": "AI consultancy helping Dutch businesses automate, accelerate and advance with practical AI implementation, lectures, workshops and workflow automation.",
+    "founder": {
+      "@type": "Person",
+      "name": "Daan van der Ster",
+      "jobTitle": "Founder & AI Consultant",
+      "description": "5+ years experience in process automation, expert in make.com, n8n and AI tools. Guided 100+ companies in AI transformation."
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Netherlands" 
+    },
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Process Automation", 
+      "Workflow Automation",
+      "Business Consulting",
+      "Training and Education"
+    ],
+    "slogan": "Automate. Accelerate. Advance.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+31-6-23312615",
+      "email": "tech@paiconnect.nl",
+      "contactType": "customer service"
+    }
+  };
+
   return (
     <>
       <SEOHead
         title="About PaiConnect - AI consultancy experts in Netherlands"
         description="Meet Daan van der Ster & PaiConnect team. 100+ companies transformed with our AI lecture, workshop & workflow automation expertise since 2019."
         canonical="https://paiconnect.nl/over"
+        structuredData={structuredData}
       />
 
       {/* Geen min-h-screen op de buitenste wrapper; zo eindigt de bg bij de footer */}

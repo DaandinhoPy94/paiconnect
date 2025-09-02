@@ -9,46 +9,47 @@ import { BANNER_LANGER_URL } from "@/lib/constants";
 const FAQ = () => {
   const faqs = [
     {
-      question: "Wat kost een lezing of workshop?",
-      answer: "Lezingen vanaf €1.500, workshops vanaf €2.000. Alle prijzen zijn excl. BTW en afhankelijk van locatie, duur en specifieke wensen."
+      question: "What does an AI lecture or workshop cost?",
+      answer: "Lectures start from €1,500, workshops from €2,000. All prices exclude VAT and depend on location, duration and specific requirements. We customize every session to your needs and industry."
     },
     {
-      question: "Hoe snel kunnen jullie starten?",
-      answer: "Binnen 2 weken kunnen we meestal starten met lezingen of workshops. Voor consultancy projecten hangt dit af van de scope en complexiteit."
+      question: "How quickly can you start with our AI project?",
+      answer: "Within 2 weeks we can usually start with lectures or workshops. For consultancy projects this depends on scope and complexity. We'll provide a clear timeline during our intake call."
     },
     {
-      question: "Is dit alleen voor grote bedrijven?",
-      answer: "Nee, ook voor MKB. We passen onze aanpak aan op de grootte en behoeften van jouw organisatie. Van startups tot multinationals."
+      question: "Do you only work with large companies?",
+      answer: "No, we specialize in SMEs too. We adapt our approach to your organization's size and needs. From startups to multinationals - practical AI implementation works for everyone."
     },
     {
-      question: "Welke tools gebruiken jullie?",
-      answer: "We werken met make.com, n8n, ChatGPT, Notion, Slack, Google Workspace, Microsoft 365 en vele andere tools. De keuze hangt af van jouw bestaande systemen."
+      question: "Which AI tools and platforms do you use?",
+      answer: "We work with make.com, n8n, ChatGPT, Claude, Notion, Slack, Google Workspace, Microsoft 365 and many other tools. Tool choice depends on your existing systems and specific needs."
     },
     {
-      question: "Zijn workshops op maat?",
-      answer: "Ja, alle workshops worden afgestemd op jouw sector, team en specifieke uitdagingen. We maken gebruik van jouw eigen cases en voorbeelden."
+      question: "Are workshops customized to our business?",
+      answer: "Yes, all workshops are tailored to your sector, team and specific challenges. We use your own cases and examples to ensure maximum relevance and practical application."
     },
     {
-      question: "Hoe meet ik ROI?",
-      answer: "We meten tijdwinst, foutreductie en procesdoorlooptijd. Gemiddeld zien klanten 30% tijdsbesparing en 50% minder fouten binnen 3 maanden."
+      question: "How do I measure ROI from AI implementation?",
+      answer: "We measure time savings, error reduction and process throughput. On average, clients see 30% time savings and 50% fewer errors within 3 months of implementation."
     },
     {
-      question: "Kan ik online een sessie boeken?",
-      answer: "Ja, via onze contactpagina kun je direct een kennismakingsgesprek inplannen. We bespreken dan jouw specifieke behoeften."
-    },
-    {
-      question: "Wat als we weinig AI-kennis hebben?",
-      answer: "Perfect! Dan beginnen we met een basis-sessie waarin we uitleggen wat AI wel en niet kan. We zorgen ervoor dat iedereen meekan."
-    },
-    {
-      question: "Zijn jullie GDPR-compliant?",
-      answer: "Ja, data blijft veilig. We werken volgens GDPR-richtlijnen en zorgen dat alle automatiseringen privacy-vriendelijk zijn opgezet."
-    },
-    {
-      question: "Kunnen jullie continu support leveren?",
-      answer: "Ja, via ons Run & Improve retainer programma leveren we doorlopende ondersteuning, optimalisatie en nieuwe automatiseringen."
+      question: "What if our team has limited AI knowledge?",
+      answer: "Perfect! We start with basics, explaining what AI can and cannot do. Our approach ensures everyone can participate regardless of their current AI knowledge level."
     }
   ];
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
 
   return (
     <>
@@ -56,6 +57,7 @@ const FAQ = () => {
         title="AI consultancy FAQ: lectures, workshops & automation costs"
         description="Common questions about PaiConnect AI services: pricing for lectures & workshops, workflow automation ROI, implementation timelines & business results."
         canonical="https://paiconnect.nl/faq"
+        structuredData={structuredData}
       />
       
       <div className="min-h-screen">

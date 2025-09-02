@@ -72,6 +72,43 @@ const Booking = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AI Consultation Booking",
+    "description": "Book a consultation for AI lectures, workshops or automation audit. Free intake call with PaiConnect experts.",
+    "provider": {
+      "@type": "Organization",
+      "name": "PaiConnect",
+      "url": "https://paiconnect.nl"
+    },
+    "offers": {
+      "@type": "Offer",
+      "description": "Free consultation call to discuss AI implementation needs",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "bookingAgent": {
+      "@type": "Organization", 
+      "name": "PaiConnect"
+    },
+    "potentialAction": {
+      "@type": "ReserveAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://paiconnect.nl/boeken",
+        "actionPlatform": [
+          "http://schema.org/DesktopWebPlatform",
+          "http://schema.org/MobileWebPlatform"
+        ]
+      },
+      "result": {
+        "@type": "Reservation",
+        "name": "AI Consultation Booking"
+      }
+    }
+  };
+
   const form = useForm<BookingFormData>({
     resolver: zodResolver(currentStep === 1 ? step1Schema : currentStep === 2 ? step2Schema : fullSchema),
     defaultValues: {
@@ -199,6 +236,8 @@ const Booking = () => {
       <SEOHead
         title="Book AI lecture or workshop - PaiConnect consultation"
         description="Schedule your AI consultation: book inspiring lectures, hands-on workshops or workflow automation audit. Free intake call with PaiConnect experts."
+        canonical="https://paiconnect.nl/boeken"
+        structuredData={structuredData}
       />
       
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
