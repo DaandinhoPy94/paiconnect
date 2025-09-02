@@ -65,7 +65,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({
         .justify-center { justify-content: center; }
         .space-x-4 > :not([hidden]) ~ :not([hidden]) { margin-left: 1rem; }
         
-        /* Typography */
+        /* Typography - optimized for LCP */
         .text-primary { color: hsl(200 100% 50%); }
         .text-white { color: rgb(255 255 255); }
         .text-muted-foreground { color: hsl(215.4 16.3% 46.9%); }
@@ -76,6 +76,19 @@ const SEOHead: React.FC<SEOHeadProps> = ({
         .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
         .leading-tight { line-height: 1.25; }
         .leading-relaxed { line-height: 1.625; }
+        
+        /* Critical styles for LCP paragraph element */
+        p.text-lg.md\\:text-xl.text-muted-foreground.mb-8.leading-relaxed.max-w-2xl.mx-auto {
+          font-size: 1.125rem;
+          line-height: 1.625;
+          color: hsl(215.4 16.3% 46.9%);
+          margin-bottom: 2rem;
+          max-width: 42rem;
+          margin-left: auto;
+          margin-right: auto;
+          will-change: auto;
+          contain: layout style;
+        }
         
         /* Spacing */
         .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
