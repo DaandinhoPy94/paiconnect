@@ -371,13 +371,19 @@ const Booking = () => {
                                           field.onChange(newValue);
                                         }}
                                       >
-                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                                          <FormControl>
-                                            <Checkbox
-                                              checked={isSelected}
-                                              className="mt-1"
-                                            />
-                                          </FormControl>
+                                         <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                           <FormControl>
+                                             <Checkbox
+                                               checked={isSelected}
+                                               className="mt-1"
+                                               onChange={(checked) => {
+                                                 const newValue = checked
+                                                   ? [...(field.value || []), type.id]
+                                                   : field.value?.filter(value => value !== type.id) || [];
+                                                 field.onChange(newValue);
+                                               }}
+                                             />
+                                           </FormControl>
                                           <div className="flex-1">
                                             <FormLabel className="font-semibold cursor-pointer">
                                               {type.label}
