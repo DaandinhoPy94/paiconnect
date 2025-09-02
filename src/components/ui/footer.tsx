@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Video, Users, Camera, MessageSquare, Play } from "lucide-react";
 import { Button } from "./button";
-import logo from "@/assets/logo.png";
+import LogoSVG from "./logo-svg";
 import { analytics } from "@/lib/analytics";
 
 const Footer = () => {
@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Column 1 (Left): Logo and tagline */}
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center space-x-2 mb-2">
-              <img src={logo} alt="PaiConnect Logo" className="h-6 md:h-7" />
+              <LogoSVG className="h-6 md:h-7 w-6 md:w-7" />
               <span className="text-base font-bold leading-tight">PaiConnect</span>
             </div>
             <p className="text-muted-foreground text-xs leading-snug">
