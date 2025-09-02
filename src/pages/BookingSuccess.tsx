@@ -23,10 +23,10 @@ const BookingSuccess = () => {
             <div className="mb-8">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
               <h1 className="text-4xl font-bold gradient-text mb-4">
-                Bedankt voor uw boeking!
+                Bedankt voor uw aanvraag!
               </h1>
               <p className="text-xl text-muted-foreground">
-                Wij nemen spoedig contact met u op.
+                Uw intake is gepland. We nemen binnen 4 uur contact op om de agenda af te stemmen.
               </p>
             </div>
 
@@ -55,9 +55,9 @@ const BookingSuccess = () => {
                     2
                   </div>
                   <div>
-                    <h3 className="font-semibold">Contact binnen 24 uur</h3>
+                    <h3 className="font-semibold">Contact binnen 4 uur</h3>
                     <p className="text-sm text-muted-foreground">
-                      Een van onze specialisten neemt binnen 24 uur contact met u op.
+                      Een specialist belt u vandaag nog voor agendafstemming. Verwacht een calendar invite binnen 24 uur.
                     </p>
                   </div>
                 </div>

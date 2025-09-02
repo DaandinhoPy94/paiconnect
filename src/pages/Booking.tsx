@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
-import { format } from "date-fns";
-import { CalendarIcon, Check, Clock, Euro, Mail, Phone, Building2 } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ChevronLeft, ChevronRight, Check, Clock, Building2, Calendar, User, Shield } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
@@ -14,66 +13,67 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
-const bookingSchema = z.object({
-  name: z.string().min(2, "Naam is verplicht"),
-  email: z.string().email("Ongeldig emailadres"),
-  type: z.array(z.string()).min(1, "Selecteer minimaal één type"),
-  details: z.string().optional(),
-  date: z.date().optional(),
-  company: z.string().optional(),
-  phone: z.string().optional(),
+// Step schemas for validation
+const step1Schema = z.object({
+  type: z.array(z.string()).min(1, "Selecteer minimaal één service"),
 });
 
-type BookingFormData = z.infer<typeof bookingSchema>;
+const step2Schema = z.object({
+  name: z.string().min(2, "Naam is verplicht"),
+  email: z.string().email("Ongeldig emailadres"),
+  company: z.string().optional(),
+  phone: z.string().optional(),
+  preferredDate: z.string().optional(),
+  details: z.string().optional(),
+});
 
-const predefinedPackages = [
-  {
-    id: "lezing",
-    title: "Lezing",
-    description: "Inspirerende presentatie over AI voor uw organisatie",
-    price: 500,
+const fullSchema = step1Schema.merge(step2Schema);
+
+type BookingFormData = z.infer<typeof fullSchema>;
+
+const serviceTypes = [
+  { 
+    id: "lezing", 
+    label: "AI Lezing & Keynote", 
+    description: "Inspirerende presentatie over AI-toepassingen voor uw organisatie",
     duration: "1-2 uur",
-    features: ["Interactieve presentatie", "Q&A sessie", "Handouts"],
+    price: "Vanaf €500"
   },
-  {
-    id: "workshop",
-    title: "Workshop",
-    description: "Hands-on training voor uw team",
-    price: 750,
-    duration: "Halve dag",
-    features: ["Praktische oefeningen", "Persoonlijke begeleiding", "Werkmateriaal"],
+  { 
+    id: "workshop", 
+    label: "Hands-on AI Workshop", 
+    description: "Praktische training waarin uw team direct aan de slag gaat",
+    duration: "Halve/hele dag",
+    price: "Vanaf €750"
   },
-  {
-    id: "audit",
-    title: "Automatisering Audit",
-    description: "Analyse van uw processen en AI-mogelijkheden",
-    price: 1000,
-    duration: "1-2 dagen",
-    features: ["Procesanalyse", "AI-potentieelrapport", "Implementatieplan"],
+  { 
+    id: "automatisering", 
+    label: "Automatisering & Consultancy", 
+    description: "Procesanalyse en implementatie van AI-oplossingen",
+    duration: "Op maat",
+    price: "Op aanvraag"
   },
 ];
 
-const serviceTypes = [
-  { id: "lezing", label: "Lezing" },
-  { id: "workshop", label: "Workshop" },
-  { id: "automatisering", label: "Automatisering" },
+const steps = [
+  { id: 1, title: "Kies service", description: "Selecteer gewenste dienstverlening" },
+  { id: 2, title: "Uw gegevens", description: "Contactgegevens en details" },
+  { id: 3, title: "Bevestigen", description: "Controleer en verstuur aanvraag" },
 ];
 
 const Booking = () => {
-  const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const form = useForm<BookingFormData>({
-    resolver: zodResolver(bookingSchema),
+    resolver: zodResolver(currentStep === 1 ? step1Schema : currentStep === 2 ? step2Schema : fullSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -81,24 +81,76 @@ const Booking = () => {
       details: "",
       company: "",
       phone: "",
+      preferredDate: "",
     },
+    mode: "onChange"
   });
 
+  // Capture URL parameters on load
+  useEffect(() => {
+    const capturedParams = {
+      offer: searchParams.get('offer'),
+      utm_source: searchParams.get('utm_source'),
+      utm_medium: searchParams.get('utm_medium'),
+      utm_campaign: searchParams.get('utm_campaign'),
+      referrer: document.referrer,
+      landing_path: window.location.pathname + window.location.search,
+    };
+    
+    // Store in session storage for later use
+    sessionStorage.setItem('bookingParams', JSON.stringify(capturedParams));
+  }, [searchParams]);
+
+  const nextStep = async () => {
+    let isValid = false;
+    
+    if (currentStep === 1) {
+      isValid = await form.trigger(["type"]);
+    } else if (currentStep === 2) {
+      isValid = await form.trigger(["name", "email"]);
+    }
+    
+    if (isValid && currentStep < 3) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   const onSubmit = async (data: BookingFormData) => {
+    setIsSubmitting(true);
+    
     try {
+      // Get captured parameters
+      const storedParams = sessionStorage.getItem('bookingParams');
+      const urlParams = storedParams ? JSON.parse(storedParams) : {};
+      
       const bookingData = {
         name: data.name,
         email: data.email,
         type: data.type,
-        details: data.details || null,
-        date: data.date?.toISOString() || null,
+        details: data.details || `Gewenste datum: ${data.preferredDate || 'Niet opgegeven'}`,
         company: data.company || null,
         phone: data.phone || null,
-        source: 'custom_request',
-        payment_status: 'pending'
+        source: urlParams.offer || 'booking_form',
+        payment_status: 'pending',
+        // Store additional metadata in details field
+        metadata: {
+          utm_source: urlParams.utm_source,
+          utm_medium: urlParams.utm_medium,
+          utm_campaign: urlParams.utm_campaign,
+          referrer: urlParams.referrer,
+          landing_path: urlParams.landing_path,
+          preferred_date: data.preferredDate,
+        }
       };
 
-      // Use secure edge function instead of direct database access
+      console.log('Submitting booking with metadata:', bookingData);
+
       const { data: result, error } = await supabase.functions.invoke('secure-booking', {
         body: { bookingData }
       });
@@ -112,12 +164,14 @@ const Booking = () => {
         throw new Error(result?.error || 'Booking failed');
       }
       
+      // Clear stored parameters
+      sessionStorage.removeItem('bookingParams');
+      
       toast({
-        title: "Aanvraag verzonden",
-        description: "We nemen binnen 24 uur contact met je op.",
+        title: "Aanvraag verzonden!",
+        description: "We nemen binnen 4 uur contact met je op.",
       });
 
-      // Redirect to success page
       navigate("/booking-success");
     } catch (error: any) {
       console.error('Booking error:', error);
@@ -135,325 +189,237 @@ const Booking = () => {
         description: errorMessage,
         variant: "destructive",
       });
-    }
-  };
-
-  const handlePackagePayment = async (packageId: string) => {
-    setIsProcessingPayment(true);
-    
-    // First, prompt user for basic details needed for direct booking
-    const name = prompt('Uw naam (verplicht):');
-    if (!name || name.trim().length < 2) {
-      toast({
-        title: "Naam is verplicht",
-        description: "Voer uw volledige naam in om door te gaan.",
-        variant: "destructive",
-      });
-      setIsProcessingPayment(false);
-      return;
-    }
-    
-    const email = prompt('Uw emailadres (verplicht):');
-    if (!email || !email.includes('@')) {
-      toast({
-        title: "Email is verplicht",
-        description: "Voer een geldig emailadres in om door te gaan.",
-        variant: "destructive",
-      });
-      setIsProcessingPayment(false);
-      return;
-    }
-    
-    try {
-      const selectedPkg = predefinedPackages.find(pkg => pkg.id === packageId);
-      if (!selectedPkg) throw new Error('Package not found');
-
-      const bookingData = {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        type: [packageId],
-        details: `Direct booking for ${selectedPkg.title} package`,
-        selected_package: packageId,
-        price_cents: selectedPkg.price * 100,
-        source: 'direct_booking',
-        payment_status: 'completed'
-      };
-
-      // Mock iDEAL payment flow
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      // Use secure edge function for booking
-      const { data: result, error } = await supabase.functions.invoke('secure-booking', {
-        body: { bookingData }
-      });
-
-      if (error) {
-        console.error('Function error:', error);
-        throw error;
-      }
-
-      if (!result?.success) {
-        throw new Error(result?.error || 'Booking failed');
-      }
-      
-      toast({
-        title: "Betaling succesvol",
-        description: "Uw boeking is bevestigd!",
-      });
-
-      navigate("/booking-success");
-    } catch (error: any) {
-      console.error('Payment error:', error);
-      
-      let errorMessage = "Probeer het opnieuw.";
-      
-      if (error.message?.includes('Rate limit') || error.message?.includes('Too many')) {
-        errorMessage = "Te veel aanvragen. Probeer het later opnieuw.";
-      }
-      
-      toast({
-        title: "Betaling mislukt",
-        description: errorMessage,
-        variant: "destructive",
-      });
     } finally {
-      setIsProcessingPayment(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
     <>
       <SEOHead
-        title="Boek een afspraak - PaiConnect"
-        description="Boek een lezing, workshop of automatisering audit. Plan uw kennismakingsgesprek over AI-oplossingen voor uw bedrijf."
+        title="Plan een intake - AI consultancy voor Nederlandse bedrijven"
+        description="Boek een kennismakingsgesprek over AI-implementatie. Lezingen, workshops en automatisering voor MKB-bedrijven."
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
         <Navigation />
         
-        <main className="container mx-auto px-4 py-12">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold gradient-text mb-4">
-                Boek uw AI-expertise
+        <main className="container mx-auto px-4 py-8 md:py-12">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-8 md:mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+                Plan uw AI-kennismaking
               </h1>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Kies tussen directe boeking van onze standaardpakketten of plan een vrijblijvend kennismakingsgesprek voor maatwerk.
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+                In drie stappen naar een vrijblijvend gesprek over AI-oplossingen voor uw bedrijf.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              {/* Left side - Form and booking options */}
-              <div className="space-y-8">
-                {/* Direct booking packages */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Euro className="h-5 w-5" />
-                      Direct Boeken
-                    </CardTitle>
-                    <CardDescription>
-                      Kies een van onze standaardpakketten en boek direct met iDEAL
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {predefinedPackages.map((pkg) => (
-                      <div key={pkg.id} className="border rounded-lg p-4 space-y-3">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h3 className="font-semibold">{pkg.title}</h3>
-                            <p className="text-sm text-muted-foreground">{pkg.description}</p>
-                            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <Clock className="h-4 w-4" />
-                                {pkg.duration}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-2xl font-bold">€{pkg.price}</div>
-                          </div>
-                        </div>
-                        
-                        <ul className="text-sm space-y-1">
-                          {pkg.features.map((feature, index) => (
-                            <li key={index} className="flex items-center gap-2">
-                              <Check className="h-4 w-4 text-primary" />
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                        
-                        <Button 
-                          onClick={() => handlePackagePayment(pkg.id)}
-                          disabled={isProcessingPayment}
-                          className="w-full"
-                          variant="tech"
-                        >
-                          {isProcessingPayment ? "Verwerken..." : "Boek Nu met iDEAL"}
-                        </Button>
+            {/* Progress indicator */}
+            <div className="mb-8 md:mb-12">
+              <div className="flex items-center justify-between max-w-2xl mx-auto">
+                {steps.map((step, index) => (
+                  <div key={step.id} className="flex items-center">
+                    <div className={cn(
+                      "flex items-center justify-center w-10 h-10 rounded-full border-2 transition-colors",
+                      currentStep >= step.id
+                        ? "bg-primary border-primary text-primary-foreground"
+                        : "border-muted bg-background text-muted-foreground"
+                    )}>
+                      {currentStep > step.id ? (
+                        <Check className="w-5 h-5" />
+                      ) : (
+                        <span className="text-sm font-semibold">{step.id}</span>
+                      )}
+                    </div>
+                    
+                    <div className="ml-2 hidden sm:block">
+                      <div className={cn(
+                        "text-sm font-medium transition-colors",
+                        currentStep >= step.id ? "text-foreground" : "text-muted-foreground"
+                      )}>
+                        {step.title}
                       </div>
-                    ))}
-                  </CardContent>
-                </Card>
+                      <div className="text-xs text-muted-foreground">
+                        {step.description}
+                      </div>
+                    </div>
+                    
+                    {index < steps.length - 1 && (
+                      <div className={cn(
+                        "w-8 md:w-16 h-0.5 mx-2 md:mx-4 transition-colors",
+                        currentStep > step.id ? "bg-primary" : "bg-muted"
+                      )} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-                {/* Custom booking form */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Mail className="h-5 w-5" />
-                      Maatwerk Aanvraag
-                    </CardTitle>
-                    <CardDescription>
-                      Plan een vrijblijvend kennismakingsgesprek voor een oplossing op maat
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Form {...form}>
-                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        <FormField
-                          control={form.control}
-                          name="name"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Naam *</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Voeg hier uw volledige naam in" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>E-mail *</FormLabel>
-                              <FormControl>
-                                <Input type="email" placeholder="Voeg hier uw emailadres in" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="company"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Bedrijfsnaam</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Uw bedrijfsnaam (optioneel)" {...field} />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="phone"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Telefoonnummer</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Uw telefoonnummer (optioneel)" {...field} />
-                              </FormControl>
-                            </FormItem>
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name="type"
-                          render={() => (
-                            <FormItem>
-                              <FormLabel>Type dienst *</FormLabel>
-                              <FormDescription>
-                                Selecteer één of meerdere opties
-                              </FormDescription>
+            {/* Form Card */}
+            <Card className="max-w-2xl mx-auto">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  {currentStep === 1 && <Building2 className="h-5 w-5" />}
+                  {currentStep === 2 && <User className="h-5 w-5" />}
+                  {currentStep === 3 && <Check className="h-5 w-5" />}
+                  {steps[currentStep - 1].title}
+                </CardTitle>
+                <CardDescription>
+                  {steps[currentStep - 1].description}
+                </CardDescription>
+              </CardHeader>
+              
+              <CardContent>
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    
+                    {/* Step 1: Service Selection */}
+                    {currentStep === 1 && (
+                      <FormField
+                        control={form.control}
+                        name="type"
+                        render={() => (
+                          <FormItem>
+                            <FormLabel className="text-base">Welke dienst heeft uw interesse? *</FormLabel>
+                            <FormDescription>
+                              Selecteer één of meerdere opties die aansluiten bij uw behoeften
+                            </FormDescription>
+                            <div className="space-y-4">
                               {serviceTypes.map((type) => (
                                 <FormField
                                   key={type.id}
                                   control={form.control}
                                   name="type"
                                   render={({ field }) => {
+                                    const isSelected = field.value?.includes(type.id);
                                     return (
-                                      <FormItem
-                                        key={type.id}
-                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                      <div
+                                        className={cn(
+                                          "border rounded-lg p-4 cursor-pointer transition-all hover:border-primary/50",
+                                          isSelected ? "border-primary bg-primary/5" : "border-border"
+                                        )}
+                                        onClick={() => {
+                                          const newValue = isSelected
+                                            ? field.value?.filter(value => value !== type.id) || []
+                                            : [...(field.value || []), type.id];
+                                          field.onChange(newValue);
+                                        }}
                                       >
-                                        <FormControl>
-                                          <Checkbox
-                                            checked={field.value?.includes(type.id)}
-                                            onCheckedChange={(checked) => {
-                                              return checked
-                                                ? field.onChange([...field.value, type.id])
-                                                : field.onChange(
-                                                    field.value?.filter(
-                                                      (value) => value !== type.id
-                                                    )
-                                                  )
-                                            }}
-                                          />
-                                        </FormControl>
-                                        <FormLabel className="font-normal">
-                                          {type.label}
-                                        </FormLabel>
-                                      </FormItem>
-                                    )
+                                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                          <FormControl>
+                                            <Checkbox
+                                              checked={isSelected}
+                                              className="mt-1"
+                                            />
+                                          </FormControl>
+                                          <div className="flex-1">
+                                            <FormLabel className="font-semibold cursor-pointer">
+                                              {type.label}
+                                            </FormLabel>
+                                            <p className="text-sm text-muted-foreground mt-1">
+                                              {type.description}
+                                            </p>
+                                            <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                                              <span className="flex items-center gap-1">
+                                                <Clock className="h-3 w-3" />
+                                                {type.duration}
+                                              </span>
+                                              <span className="font-medium text-primary">
+                                                {type.price}
+                                              </span>
+                                            </div>
+                                          </div>
+                                        </FormItem>
+                                      </div>
+                                    );
                                   }}
                                 />
                               ))}
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+
+                    {/* Step 2: Contact Details */}
+                    {currentStep === 2 && (
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Volledige naam *</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="Uw naam" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>E-mailadres *</FormLabel>
+                                <FormControl>
+                                  <Input type="email" placeholder="naam@bedrijf.nl" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <FormField
+                            control={form.control}
+                            name="company"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Bedrijfsnaam</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="Uw bedrijf" {...field} />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Telefoonnummer</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="+31 6 1234 5678" {...field} />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
 
                         <FormField
                           control={form.control}
-                          name="date"
+                          name="preferredDate"
                           render={({ field }) => (
-                            <FormItem className="flex flex-col">
-                              <FormLabel>Gewenste datum</FormLabel>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <FormControl>
-                                    <Button
-                                      variant={"outline"}
-                                      className={cn(
-                                        "w-full pl-3 text-left font-normal",
-                                        !field.value && "text-muted-foreground"
-                                      )}
-                                    >
-                                      {field.value ? (
-                                        format(field.value, "PPP")
-                                      ) : (
-                                        <span>Selecteer een datum (optioneel)</span>
-                                      )}
-                                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                    </Button>
-                                  </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                  <Calendar
-                                    mode="single"
-                                    selected={field.value}
-                                    onSelect={field.onChange}
-                                    disabled={(date) =>
-                                      date < new Date() || date < new Date("1900-01-01")
-                                    }
-                                    initialFocus
-                                    className={cn("p-3 pointer-events-auto")}
-                                  />
-                                </PopoverContent>
-                              </Popover>
+                            <FormItem>
+                              <FormLabel>Gewenste periode</FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="Bijvoorbeeld: volgende week, begin december, januari 2024" 
+                                  {...field} 
+                                />
+                              </FormControl>
                               <FormDescription>
-                                Geef uw voorkeursdatum voor de afspraak aan
+                                Geef een indicatie wanneer het u uitkomt - we stemmen de exacte datum later af
                               </FormDescription>
-                              <FormMessage />
                             </FormItem>
                           )}
                         />
@@ -463,67 +429,113 @@ const Booking = () => {
                           name="details"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Details</FormLabel>
+                              <FormLabel>Aanvullende informatie</FormLabel>
                               <FormControl>
                                 <Textarea 
-                                  placeholder="Geef hier verdere info mee die van belang kan zijn"
+                                  placeholder="Vertel ons meer over uw situatie, wensen of vragen..."
                                   className="min-h-[100px]"
                                   {...field} 
                                 />
                               </FormControl>
                               <FormDescription>
-                                Beschrijf uw specifieke wensen of vragen
+                                Hoe meer we weten, hoe beter we kunnen voorbereiden (optioneel)
                               </FormDescription>
                             </FormItem>
                           )}
                         />
-
-                        <Button type="submit" className="w-full" variant="tech">
-                          Aanvraag Versturen
-                        </Button>
-                      </form>
-                    </Form>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Right side - Image placeholder */}
-              <div className="lg:sticky lg:top-8 h-fit">
-                <Card className="h-full">
-                  <CardContent className="p-8">
-                    <div className="bg-muted/30 rounded-lg h-96 flex items-center justify-center">
-                      <div className="text-center text-muted-foreground">
-                        <Building2 className="h-16 w-16 mx-auto mb-4" />
-                        <p className="text-lg font-medium">AI Expertise</p>
-                        <p className="text-sm">Voor uw organisatie</p>
                       </div>
+                    )}
+
+                    {/* Step 3: Confirmation */}
+                    {currentStep === 3 && (
+                      <div className="space-y-6">
+                        <div className="bg-muted/50 rounded-lg p-6 space-y-4">
+                          <h3 className="font-semibold">Overzicht van uw aanvraag:</h3>
+                          
+                          <div className="space-y-3 text-sm">
+                            <div>
+                              <span className="font-medium">Gekozen services:</span>
+                              <div className="ml-4 mt-1">
+                                {form.watch("type")?.map(typeId => {
+                                  const service = serviceTypes.find(s => s.id === typeId);
+                                  return (
+                                    <div key={typeId} className="flex items-center gap-2">
+                                      <Check className="h-3 w-3 text-primary" />
+                                      {service?.label}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <span className="font-medium">Contactgegevens:</span>
+                              <div className="ml-4 mt-1 space-y-1">
+                                <div>{form.watch("name")}</div>
+                                <div>{form.watch("email")}</div>
+                                {form.watch("company") && <div>{form.watch("company")}</div>}
+                                {form.watch("phone") && <div>{form.watch("phone")}</div>}
+                              </div>
+                            </div>
+                            
+                            {form.watch("preferredDate") && (
+                              <div>
+                                <span className="font-medium">Gewenste periode:</span>
+                                <div className="ml-4 mt-1">{form.watch("preferredDate")}</div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Privacy notice */}
+                        <div className="bg-muted/30 rounded-lg p-4 border border-muted">
+                          <div className="flex items-start gap-3">
+                            <Shield className="h-5 w-5 text-primary mt-0.5" />
+                            <div className="text-sm">
+                              <p className="font-medium mb-1">Privacy & gegevensverwerking</p>
+                              <p className="text-muted-foreground">
+                                Uw gegevens worden uitsluitend gebruikt voor het opvolgen van deze aanvraag. 
+                                We bewaren geen onnodige informatie en delen niets met derden.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Navigation buttons */}
+                    <div className="flex justify-between pt-6 border-t">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={prevStep}
+                        disabled={currentStep === 1}
+                        className={currentStep === 1 ? "invisible" : ""}
+                      >
+                        <ChevronLeft className="h-4 w-4 mr-2" />
+                        Vorige
+                      </Button>
+                      
+                      {currentStep < 3 ? (
+                        <Button type="button" onClick={nextStep} variant="tech">
+                          Volgende
+                          <ChevronRight className="h-4 w-4 ml-2" />
+                        </Button>
+                      ) : (
+                        <Button 
+                          type="submit" 
+                          disabled={isSubmitting}
+                          variant="tech"
+                          className="min-w-[120px]"
+                        >
+                          {isSubmitting ? "Versturen..." : "Verzenden"}
+                        </Button>
+                      )}
                     </div>
-                    
-                    <div className="mt-8 space-y-4">
-                      <h3 className="font-semibold text-lg">Waarom PaiConnect?</h3>
-                      <ul className="space-y-2 text-sm">
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-primary" />
-                          Praktische AI-toepassingen
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-primary" />
-                          Maatwerkoplossingen
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-primary" />
-                          Ervaren specialisten
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <Check className="h-4 w-4 text-primary" />
-                          Proven resultaten
-                        </li>
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
           </div>
         </main>
 
