@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { initAnalytics, analytics, initSessionTracking } from "@/lib/analytics";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import FAQ from "./pages/FAQ";
@@ -16,13 +18,31 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+// Component to track page views
+const PageTracker = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    initSessionTracking();
+    analytics.pageView();
+  }, [location]);
+  
+  return null;
+};
+
+const App = () => {
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
+  return (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <PageTracker />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/diensten" element={<Services />} />
@@ -42,6 +62,7 @@ const App = () => (
       </TooltipProvider>
     </QueryClientProvider>
   </HelmetProvider>
-);
+  );
+};
 
 export default App;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { analytics } from "@/lib/analytics";
 
 const Hero = () => {
   return (
@@ -22,13 +23,19 @@ const Hero = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <Button variant="tech" size="lg" className="w-full sm:w-auto" asChild>
-                <Link to="/boeken?offer=auto-detect">
+                <Link 
+                  to="/boeken?offer=auto-detect"
+                  onClick={() => analytics.ctaClick('Plan een intake', 'hero', '/boeken')}
+                >
                   Plan een intake
                 </Link>
               </Button>
               
               <Button variant="ghost" size="lg" className="hidden sm:inline-flex" asChild>
-                <Link to="/diensten">
+                <Link 
+                  to="/diensten"
+                  onClick={() => analytics.ctaClick('Bekijk workshops', 'hero', '/diensten')}
+                >
                   Bekijk workshops
                 </Link>
               </Button>
@@ -49,7 +56,10 @@ const Hero = () => {
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-4 left-4 right-4 z-50 sm:hidden">
         <Button variant="tech" size="lg" className="w-full shadow-lg" asChild>
-          <Link to="/boeken?offer=auto-detect">
+          <Link 
+            to="/boeken?offer=auto-detect"
+            onClick={() => analytics.ctaClick('Plan een intake', 'mobile_sticky', '/boeken')}
+          >
             Plan een intake
           </Link>
         </Button>

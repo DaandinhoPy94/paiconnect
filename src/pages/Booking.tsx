@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { analytics } from "@/lib/analytics";
 
 // Step schemas for validation
 const step1Schema = z.object({
@@ -123,7 +124,7 @@ const Booking = () => {
     mode: "onChange"
   });
 
-  // Capture URL parameters on load
+  // Capture URL parameters on load and track booking start
   useEffect(() => {
     const capturedParams = {
       offer: searchParams.get('offer'),
@@ -136,6 +137,9 @@ const Booking = () => {
     
     // Store in session storage for later use
     sessionStorage.setItem('bookingParams', JSON.stringify(capturedParams));
+    
+    // Track booking start
+    analytics.bookingStart(capturedParams.offer || 'direct');
   }, [searchParams]);
 
   const nextStep = async () => {
@@ -143,6 +147,10 @@ const Booking = () => {
     
     if (currentStep === 1) {
       isValid = await form.trigger(["type"]);
+      if (isValid) {
+        // Track service selection
+        analytics.serviceSelect(form.getValues("type"), currentStep);
+      }
     } else if (currentStep === 2) {
       isValid = await form.trigger(["name", "email"]);
     }
@@ -201,6 +209,13 @@ const Booking = () => {
         throw new Error(result?.error || 'Booking failed');
       }
       
+      // Track successful submission
+      analytics.bookingSubmitSuccess(
+        data.type,
+        !!data.company,
+        !!data.phone
+      );
+      
       // Clear stored parameters
       sessionStorage.removeItem('bookingParams');
       
@@ -212,6 +227,14 @@ const Booking = () => {
       navigate("/booking-success");
     } catch (error: any) {
       console.error('Booking error:', error);
+      
+      // Track failed submission
+      analytics.bookingSubmitFail(
+        error.message?.includes('validation') ? 'validation' : 
+        error.message?.includes('network') ? 'network' : 'server',
+        currentStep,
+        data.type || []
+      );
       
       let errorMessage = "Probeer het opnieuw of neem contact met ons op.";
       

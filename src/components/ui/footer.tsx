@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Video, Users, Camera, MessageSquare, Play } from "lucide-react";
 import { Button } from "./button";
 import logo from "@/assets/logo.png";
+import { analytics } from "@/lib/analytics";
 
 const Footer = () => {
   return (
@@ -60,7 +61,12 @@ const Footer = () => {
               </a>
             </div>
             <Button variant="tech" size="sm" asChild>
-              <Link to="/boeken?offer=auto-detect">Plan een intake</Link>
+              <Link 
+                to="/boeken?offer=auto-detect"
+                onClick={() => analytics.ctaClick('Plan een intake', 'footer', '/boeken')}
+              >
+                Plan een intake
+              </Link>
             </Button>
           </div>
         </div>

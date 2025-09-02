@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
+import { analytics } from "@/lib/analytics";
 
 const Navigation = () => {
   return (
@@ -19,20 +20,41 @@ const Navigation = () => {
         </Link>
         
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/diensten" className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link 
+            to="/diensten" 
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => analytics.navClick('diensten')}
+          >
             Diensten
           </Link>
-          <Link to="/ai-info" className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link 
+            to="/ai-info" 
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => analytics.navClick('ai_info')}
+          >
             AI Info
           </Link>
-          <Link to="/over" className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link 
+            to="/over" 
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => analytics.navClick('over')}
+          >
             Over ons
           </Link>
-          <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link 
+            to="/faq" 
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => analytics.navClick('faq')}
+          >
             FAQ
           </Link>
           <Button variant="tech" size="sm" asChild>
-            <Link to="/boeken?offer=auto-detect">Plan een intake</Link>
+            <Link 
+              to="/boeken?offer=auto-detect"
+              onClick={() => analytics.ctaClick('Plan een intake', 'navigation', '/boeken')}
+            >
+              Plan een intake
+            </Link>
           </Button>
         </div>
 
