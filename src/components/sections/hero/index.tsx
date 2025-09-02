@@ -49,7 +49,6 @@ const Hero = () => {
         </div>
         
         {/* Simplified decorative elements - reduced for better LCP */}
-        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.1) 0%, transparent 50%)' }}></div>
         <div className="absolute top-1/4 left-10 w-16 h-16 bg-primary/10 rounded-full"></div>
         <div className="absolute bottom-1/4 right-10 w-20 h-20 bg-secondary/10 rounded-full"></div>
       </section>
