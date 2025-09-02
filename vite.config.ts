@@ -28,10 +28,20 @@ export default defineConfig(({ mode }) => ({
           'ui': ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
           'forms': ['react-hook-form', '@hookform/resolvers', 'zod'],
           'utils': ['clsx', 'tailwind-merge', 'class-variance-authority']
-        }
+        },
+        // Add cache-friendly asset naming
+        assetFileNames: (assetInfo) => {
+          if (!assetInfo.name) return `assets/[name]-[hash][extname]`;
+          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name)) {
+            return `assets/images/[name]-[hash][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js'
       }
     },
-    // Optimize images
+    // Optimize images and caching
     assetsInlineLimit: 4096, // Inline small assets
     minify: 'terser',
     terserOptions: {
