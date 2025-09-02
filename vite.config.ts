@@ -25,11 +25,39 @@ export default defineConfig(({ mode }) => ({
     // Performance optimizations
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor': ['react', 'react-dom'],
-          'ui': ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
-          'forms': ['react-hook-form', '@hookform/resolvers', 'zod'],
-          'utils': ['clsx', 'tailwind-merge', 'class-variance-authority']
+        manualChunks: (id) => {
+          // Vendor chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'radix-ui';
+            }
+            if (id.includes('posthog') || id.includes('analytics')) {
+              return 'analytics';
+            }
+            if (id.includes('react-router')) {
+              return 'router';
+            }
+            if (id.includes('lucide') || id.includes('icons')) {
+              return 'icons';
+            }
+            return 'vendor';
+          }
+          
+          // Page chunks
+          if (id.includes('src/pages/')) {
+            const pageName = id.split('/pages/')[1]?.split('.')[0];
+            return `page-${pageName?.toLowerCase()}`;
+          }
+          
+          // Component chunks
+          if (id.includes('src/components/ui/')) {
+            return 'ui-components';
+          }
+          
+          return undefined;
         },
         // Add cache-friendly asset naming
         assetFileNames: (assetInfo) => {
