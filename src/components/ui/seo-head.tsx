@@ -29,9 +29,12 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="canonical" href={canonical} />
       
-      {/* Performance hints for LCP optimization */}
+      {/* Performance hints for LCP optimization and external resources */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="preconnect" href="https://app.posthog.com" />
+      <link rel="preconnect" href="https://us.i.posthog.com" />
+      <link rel="preconnect" href="https://us-assets.i.posthog.com" />
       <meta name="color-scheme" content="light dark" />
       
       {/* Comprehensive critical CSS for faster initial render */}

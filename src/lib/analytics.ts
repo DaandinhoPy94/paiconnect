@@ -1,33 +1,41 @@
-import posthog from 'posthog-js';
-
-// Defer analytics initialization to avoid blocking critical rendering
-export const initAnalytics = () => {
-  if (typeof window !== 'undefined') {
+// Dynamic import to avoid including PostHog in main bundle
+let posthog: any = null;
+// Completely async analytics initialization to avoid blocking critical path
+export const initAnalytics = async () => {
+  if (typeof window !== 'undefined' && !posthog) {
     // Use requestIdleCallback to defer initialization until browser is idle
-    const initPostHog = () => {
-      posthog.init('phc_your_project_api_key_here', {
-        api_host: 'https://app.posthog.com',
-        loaded: (posthog) => {
-          if (import.meta.env.DEV) posthog.debug();
-        },
-        capture_pageview: false, // We'll handle this manually
-        capture_pageleave: true,
-        session_recording: {
-          maskAllInputs: true, // Privacy compliance
-          maskInputOptions: {
-            password: true,
-            email: true,
+    const initPostHog = async () => {
+      try {
+        // Dynamic import to keep PostHog out of main bundle
+        const { default: posthogLib } = await import('posthog-js');
+        posthog = posthogLib;
+        
+        posthog.init('phc_your_project_api_key_here', {
+          api_host: 'https://app.posthog.com',
+          loaded: (posthog) => {
+            if (import.meta.env.DEV) posthog.debug();
+          },
+          capture_pageview: false, // We'll handle this manually
+          capture_pageleave: true,
+          session_recording: {
+            maskAllInputs: true, // Privacy compliance
+            maskInputOptions: {
+              password: true,
+              email: true,
+            }
           }
-        }
-      });
+        });
+      } catch (error) {
+        console.warn('Analytics failed to load:', error);
+      }
     };
 
     // Defer analytics loading to not block critical resources
     if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(initPostHog, { timeout: 2000 });
+      window.requestIdleCallback(initPostHog, { timeout: 3000 });
     } else {
       // Fallback for older browsers
-      setTimeout(initPostHog, 1000);
+      setTimeout(initPostHog, 2000);
     }
   }
 };
@@ -72,14 +80,14 @@ export const initSessionTracking = () => {
   sessionStorage.setItem('analyticsParams', JSON.stringify(params));
 };
 
-// Analytics event functions
+// Analytics event functions with null safety
 export const analytics = {
   pageView: () => {
-    posthog.capture('page_view', getBaseProperties());
+    if (posthog) posthog.capture('page_view', getBaseProperties());
   },
 
   navClick: (navItem: string) => {
-    posthog.capture('nav_click', {
+    if (posthog) posthog.capture('nav_click', {
       ...getBaseProperties(),
       nav_item: navItem,
       current_page: window.location.pathname,
@@ -87,7 +95,7 @@ export const analytics = {
   },
 
   ctaClick: (ctaText: string, ctaLocation: string, destination: string) => {
-    posthog.capture('cta_click', {
+    if (posthog) posthog.capture('cta_click', {
       ...getBaseProperties(),
       cta_text: ctaText,
       cta_location: ctaLocation,
@@ -96,7 +104,7 @@ export const analytics = {
   },
 
   serviceSelect: (services: string[], bookingStep: number) => {
-    posthog.capture('service_select', {
+    if (posthog) posthog.capture('service_select', {
       ...getBaseProperties(),
       services: services,
       booking_step: bookingStep,
@@ -104,7 +112,7 @@ export const analytics = {
   },
 
   bookingStart: (entryPoint: string) => {
-    posthog.capture('booking_start', {
+    if (posthog) posthog.capture('booking_start', {
       ...getBaseProperties(),
       entry_point: entryPoint,
       booking_start_time: Date.now(),
@@ -118,7 +126,7 @@ export const analytics = {
     const startTime = sessionStorage.getItem('bookingStartTime');
     const submissionTime = startTime ? (Date.now() - parseInt(startTime)) / 1000 : null;
     
-    posthog.capture('booking_submit_success', {
+    if (posthog) posthog.capture('booking_submit_success', {
       ...getBaseProperties(),
       services: services,
       has_company: hasCompany,
@@ -134,7 +142,7 @@ export const analytics = {
     const startTime = sessionStorage.getItem('bookingStartTime');
     const submissionTime = startTime ? (Date.now() - parseInt(startTime)) / 1000 : null;
     
-    posthog.capture('booking_submit_fail', {
+    if (posthog) posthog.capture('booking_submit_fail', {
       ...getBaseProperties(),
       error_type: errorType,
       error_step: errorStep,
@@ -145,6 +153,8 @@ export const analytics = {
 
   // Identify user (only with non-PII data)
   identify: (traits: Record<string, any> = {}) => {
+    if (!posthog) return;
+    
     // Generate anonymous user ID based on session
     const sessionId = sessionStorage.getItem('analyticsSessionId') || 
       'user_' + Math.random().toString(36).substr(2, 9);
