@@ -160,6 +160,19 @@ All colors MUST be HSL for proper theming support.
   }
 
   /* Geometric patterns */
+  /* Performance optimizations */
+  .will-change-auto {
+    will-change: auto;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    contain: layout style;
+  }
+  
   .bg-grid-pattern {
     background-image: 
       linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
