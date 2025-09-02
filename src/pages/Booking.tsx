@@ -359,18 +359,12 @@ const Booking = () => {
                                   render={({ field }) => {
                                     const isSelected = field.value?.includes(type.id);
                                     return (
-                                      <div
-                                        className={cn(
-                                          "border rounded-lg p-4 cursor-pointer transition-all hover:border-primary/50",
-                                          isSelected ? "border-primary bg-primary/5" : "border-border"
-                                        )}
-                                        onClick={() => {
-                                          const newValue = isSelected
-                                            ? field.value?.filter(value => value !== type.id) || []
-                                            : [...(field.value || []), type.id];
-                                          field.onChange(newValue);
-                                        }}
-                                      >
+                                       <div
+                                         className={cn(
+                                           "border rounded-lg p-4 transition-all hover:border-primary/50",
+                                           isSelected ? "border-primary bg-primary/5" : "border-border"
+                                         )}
+                                       >
                                          <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                                            <FormControl>
                                              <Checkbox
