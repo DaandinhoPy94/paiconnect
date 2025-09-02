@@ -44,8 +44,8 @@ const Index = () => {
   return (
     <>
       <SEOHead 
-        title="AI consultancy & workshops voor bedrijven – PaiConnect"
-        description="Ontdek hoe AI jouw bedrijf slimmer maakt. Lezingen, workshops en consultancy voor automatisering en productiviteit."
+        title="AI lecture, workshop & workflow automation - PaiConnect"
+        description="Dutch AI consultancy: practical lectures, hands-on workshops & workflow automation. Help businesses automate, accelerate & advance with proven results."
         canonical="https://paiconnect.nl"
         structuredData={structuredData}
       />

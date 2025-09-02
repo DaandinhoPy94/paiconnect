@@ -53,8 +53,8 @@ const FAQ = () => {
   return (
     <>
       <SEOHead 
-        title="Veelgestelde vragen over AI consultancy – PaiConnect"
-        description="Antwoorden op de meest gestelde vragen over AI lezingen, workshops en consultancy. Van prijzen tot implementatie."
+        title="AI consultancy FAQ: lectures, workshops & automation costs"
+        description="Common questions about PaiConnect AI services: pricing for lectures & workshops, workflow automation ROI, implementation timelines & business results."
         canonical="https://paiconnect.nl/faq"
       />
       

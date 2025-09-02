@@ -197,8 +197,8 @@ const Booking = () => {
   return (
     <>
       <SEOHead
-        title="Plan een intake - AI consultancy voor Nederlandse bedrijven"
-        description="Boek een kennismakingsgesprek over AI-implementatie. Lezingen, workshops en automatisering voor MKB-bedrijven."
+        title="Book AI lecture or workshop - PaiConnect consultation"
+        description="Schedule your AI consultation: book inspiring lectures, hands-on workshops or workflow automation audit. Free intake call with PaiConnect experts."
       />
       
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">

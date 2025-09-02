@@ -58,8 +58,8 @@ const Services = () => {
   return (
     <>
       <SEOHead 
-        title="AI diensten: Lezingen, Workshops & Consultancy – PaiConnect"
-        description="Ontdek onze AI-diensten: inspirerende lezingen, praktische workshops en consultancy voor procesautomatisering."
+        title="AI lecture, workshop & automation services - PaiConnect"
+        description="Professional AI services: inspiring lectures, practical workshops & workflow automation consultancy. Transform your business with proven AI implementation."
         canonical="https://paiconnect.nl/diensten"
       />
       

@@ -12,8 +12,8 @@ const About = () => {
   return (
     <>
       <SEOHead
-        title="Over PaiConnect – AI consultancy"
-        description="Ontdek onze missie: bedrijven helpen Automate. Accelerate. Advance. Leer meer over Daan van der Ster en het PaiConnect team."
+        title="About PaiConnect - AI consultancy experts in Netherlands"
+        description="Meet Daan van der Ster & PaiConnect team. 100+ companies transformed with our AI lecture, workshop & workflow automation expertise since 2019."
         canonical="https://paiconnect.nl/over"
       />
 
