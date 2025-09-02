@@ -21,7 +21,9 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     // Target modern browsers to avoid unnecessary transpilation
-    target: 'es2020',
+    target: ['es2020', 'chrome80', 'firefox78', 'safari14', 'edge88'],
+    // Disable legacy browser support to reduce bundle size
+    cssTarget: 'chrome80',
     // Performance optimizations
     rollupOptions: {
       output: {
