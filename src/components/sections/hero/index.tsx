@@ -31,7 +31,7 @@ const Hero = () => {
                 </Link>
               </Button>
               
-              <Button variant="ghost" size="lg" className="hidden sm:inline-flex" asChild>
+              <Button variant="tech" size="lg" className="hidden sm:inline-flex" asChild>
                 <Link 
                   to="/diensten"
                   onClick={() => analytics.ctaClick('Bekijk workshops', 'hero', '/diensten')}
