@@ -41,10 +41,37 @@ const SEOHead: React.FC<SEOHeadProps> = ({
           font-display: swap;
           src: local('Inter');
         }
-        /* Critical CSS for LCP element - inline for fastest rendering */
+        /* Critical CSS for LCP and initial render */
         .text-primary { color: hsl(200 100% 50%); }
         h1 { font-weight: 700; line-height: 1.1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+        .min-h-screen { min-height: 100vh; }
+        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
+        .text-center { text-align: center; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+        .font-bold { font-weight: 700; }
+        .gradient-text { background: linear-gradient(135deg, hsl(200 100% 50%), hsl(240 100% 70%)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        @media (min-width: 768px) {
+          .md\\:text-5xl { font-size: 3rem; line-height: 1; }
+          .md\\:py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+        }
       `}</style>
+      
+      {/* Defer non-critical CSS loading */}
+      <link 
+        rel="preload" 
+        href="/assets/index-BwzcmeCr.css" 
+        as="style" 
+        onLoad={(e) => {
+          const target = e.target as HTMLLinkElement;
+          target.onload = null;
+          target.rel = 'stylesheet';
+        }}
+      />
+      <noscript>
+        <link rel="stylesheet" href="/assets/index-BwzcmeCr.css" />
+      </noscript>
       
       {/* Indexing control */}
       {noindex && <meta name="robots" content="noindex, nofollow" />}
