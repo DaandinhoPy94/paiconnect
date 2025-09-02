@@ -11,11 +11,12 @@ const Hero = () => {
         {/* Critical content first - optimized for LCP */}
         <div className="container relative">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight will-change-auto">
-              <span className="gradient-text">AI implementatie die écht werkt</span>
+            {/* Simplified H1 for faster LCP - using solid color instead of gradient */}
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-primary">
+              AI implementatie die écht werkt
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto will-change-auto">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
               Verhoog je productiviteit met 30% door slimme automatisering. Van strategie tot implementatie, voor Nederlandse MKB-bedrijven.
             </p>
             
@@ -47,10 +48,10 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Decorative elements - deferred for better LCP */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-50 will-change-transform" style={{ contain: 'layout style' }}></div>
-        <div className="absolute top-1/4 left-10 w-20 h-20 bg-primary/20 rounded-full blur-xl will-change-transform" style={{ contain: 'layout style' }}></div>
-        <div className="absolute bottom-1/4 right-10 w-32 h-32 bg-secondary/20 rounded-full blur-xl will-change-transform" style={{ contain: 'layout style' }}></div>
+        {/* Simplified decorative elements - reduced for better LCP */}
+        <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, hsl(var(--primary) / 0.1) 0%, transparent 50%)' }}></div>
+        <div className="absolute top-1/4 left-10 w-16 h-16 bg-primary/10 rounded-full"></div>
+        <div className="absolute bottom-1/4 right-10 w-20 h-20 bg-secondary/10 rounded-full"></div>
       </section>
 
       {/* Sticky Mobile CTA */}

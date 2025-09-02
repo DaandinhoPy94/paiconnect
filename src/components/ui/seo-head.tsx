@@ -34,13 +34,16 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <meta name="color-scheme" content="light dark" />
       
-      {/* Optimize font loading */}
+      {/* Optimize font loading and critical CSS for LCP */}
       <style>{`
         @font-face {
           font-family: 'Inter';
           font-display: swap;
           src: local('Inter');
         }
+        /* Critical CSS for LCP element - inline for fastest rendering */
+        .text-primary { color: hsl(200 100% 50%); }
+        h1 { font-weight: 700; line-height: 1.1; }
       `}</style>
       
       {/* Indexing control */}
