@@ -1,6 +1,6 @@
 import React from "react";
 import Navigation from "@/components/ui/navigation";
-import HeroSection from "@/components/ui/hero-section";
+import Hero from "@/components/sections/hero";
 import IntroSection from "@/components/ui/intro-section";
 import ServicesSection from "@/components/ui/services-section";
 import ResultsSection from "@/components/ui/results-section";
@@ -60,7 +60,7 @@ const Index = () => {
         <div className="relative z-10">
           <Navigation />
           <main>
-            <HeroSection />
+            <Hero />
             <IntroSection />
             <ServicesSection />
             <ResultsSection />

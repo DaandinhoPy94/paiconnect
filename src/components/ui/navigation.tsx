@@ -32,7 +32,7 @@ const Navigation = () => {
             FAQ
           </Link>
           <Button variant="tech" size="sm" asChild>
-            <Link to="/booking">Plan een kennismaking</Link>
+            <Link to="/boeken?offer=auto-detect">Plan een intake</Link>
           </Button>
         </div>
 

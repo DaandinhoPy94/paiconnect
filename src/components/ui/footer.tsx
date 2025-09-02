@@ -48,10 +48,10 @@ const Footer = () => {
             </div>
           </div>
           
-          {/* Column 3 (Right): Contact information */}
+          {/* Column 3 (Right): Contact information and CTA */}
           <div className="flex flex-col items-center md:items-end">
             <h3 className="text-base font-semibold mb-2 leading-tight">Contact</h3>
-            <div className="text-sm space-y-2 text-center md:text-right leading-snug">
+            <div className="text-sm space-y-2 text-center md:text-right leading-snug mb-3">
               <a href="mailto:tech@paiconnect.nl" className="text-muted-foreground hover:text-secondary transition-colors block">
                 tech@paiconnect.nl
               </a>
@@ -59,6 +59,9 @@ const Footer = () => {
                 +31 6 23 31 26 15
               </a>
             </div>
+            <Button variant="tech" size="sm" asChild>
+              <Link to="/boeken?offer=auto-detect">Plan een intake</Link>
+            </Button>
           </div>
         </div>
       </div>

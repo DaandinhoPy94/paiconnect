@@ -33,6 +33,7 @@ const App = () => (
             <Route path="/ai-info" element={<AIInfo />} />
             <Route path="/ai-info/:toolName" element={<AIToolDetail />} />
             <Route path="/booking" element={<Booking />} />
+            <Route path="/boeken" element={<Booking />} />
             <Route path="/booking-success" element={<BookingSuccess />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
