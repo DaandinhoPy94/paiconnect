@@ -376,7 +376,7 @@ const Booking = () => {
                                              <Checkbox
                                                checked={isSelected}
                                                className="mt-1"
-                                               onChange={(checked) => {
+                                               onCheckedChange={(checked) => {
                                                  const newValue = checked
                                                    ? [...(field.value || []), type.id]
                                                    : field.value?.filter(value => value !== type.id) || [];
