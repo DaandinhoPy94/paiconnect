@@ -37,6 +37,10 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <link rel="preconnect" href="https://us-assets.i.posthog.com" />
       <meta name="color-scheme" content="light dark" />
       
+      {/* Cache control hints for static assets */}
+      <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
+      <meta httpEquiv="Expires" content="Wed, 21 Oct 2025 07:28:00 GMT" />
+      
       {/* Comprehensive critical CSS for faster initial render */}
       <style>{`
         @font-face {
