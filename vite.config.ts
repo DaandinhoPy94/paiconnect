@@ -20,6 +20,8 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
+    // Target modern browsers to avoid unnecessary transpilation
+    target: 'es2020',
     // Performance optimizations
     rollupOptions: {
       output: {
