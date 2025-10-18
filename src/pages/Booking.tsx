@@ -634,6 +634,7 @@ const Booking = () => {
             </main>
           </div>
         </div>
+        </div>
 
         <Footer />
       </div>
