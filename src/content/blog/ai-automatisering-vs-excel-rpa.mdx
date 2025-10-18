@@ -1,0 +1,115 @@
+---
+title: "AI-automatisering vs. Excel-macro’s/RPA: wat kies je wanneer?"
+slug: "ai-automatisering-vs-excel-rpa"
+date: "2025-10-18"
+updated: "2025-10-18"
+author: "Daan van der Ster"
+summary: "# AI-automatisering vs. Excel-macro’s/RPA: wat kies je wanneer? Intro: Automatiseren deden we natuurlijk al vóór de AI-revolutie. Veel bedrijven gebruiken al jaren Excel-macro’s o…"
+---
+
+# AI-automatisering vs. Excel-macro’s/RPA: wat kies je wanneer?
+
+Intro: Automatiseren deden we natuurlijk al vóór de AI-revolutie. Veel bedrijven gebruiken al jaren Excel-macro’s of meer recente Robotic Process Automation (RPA) tools om repetitief werk te automatiseren. Nu AI steeds krachtiger wordt, rijst de vraag: moeten we onze macro’s en RPA vervangen door AI, of vullen ze elkaar aan? In dit stuk vergelijken we traditionele automatisering (macro’s, RPA) met AI-gedreven automatisering. We leggen uit wat de voor- en nadelen zijn van elk, en – belangrijk – wanneer je welke inzet. Zo kun je beter beslissen wat in jouw situatie het meest geschikt is: soms is een simpele macro genoeg, soms heb je de intelligentie van AI nodig.
+
+Excel-macro’s in het kort
+
+Wat is het? Excel-macro’s (of VBA-scripts) zijn eigenlijk kleine programmaatjes binnen Excel waarmee je repetitieve handelingen automatiseert. Bijvoorbeeld een macro die elke ochtend data uit Sheet1 kopieert, filtert en in Sheet2 plakt met een druk op de knop.
+
+Voordelen: Ze zijn relatief eenvoudig te maken voor wie Excel goed kent. Perfect voor taken binnen Excel: rekenregels toepassen, kolommen formatteren, rapporten genereren. Geen extra software nodig, lage instap. Ideaal voor structurele, onveranderlijke taken.
+
+Nadelen: Werken vooral binnen Excel – weinig integratie daarbuiten tenzij je complexe scripts bouwt. Ze zijn foutgevoelig als iets verandert (andere kolomnaam = macro crasht). Onderhoud kan lastig zijn als de persoon die het maakte vertrekt (“spreadsheet met mysteriescript”). En macro’s kunnen alleen doen wat je expliciet programmeert – geen echte ‘intelligentie’ of adaptiviteit.
+
+Gebruik wanneer: Als je een klus hebt die je nu handmatig in Excel doet, steeds op dezelfde manier, en de regels zijn duidelijk. Bijvoorbeeld: wekelijks een sheet updaten met nieuwe cijfers en standaardgrafiek genereren. Macro’s zijn dan je vriend – snel op te zetten en betrouwbaar zolang de inputstructuur vaststaat.
+
+RPA (Robotic Process Automation) in het kort
+
+Wat is het? RPA is software die menselijk computerwerk imiteert. Een RPA-bot kan bijvoorbeeld door je ERP-systeem klikken en gegevens overtypen naar een ander systeem, net alsof een medewerker dat doet – maar dan automatisch en razendsnel. Bedrijven gebruiken RPA om verschillende applicaties te laten “praten” zonder integratie, of om legacy taken te automatiseren.
+
+Voordelen: Toepasbaar buiten Excel, namelijk over al je systemen heen. Een RPA-bot kan in principe alles doen wat een mens op een computer doet: klikken, typen, lezen van schermen. Het is rule-based, dus voorspelbaar. En relatief sneller in te richten dan een maatwerk softwarekoppeling. RPA is top voor workflows die vastomlijnd zijn maar geen API/integratie hebben.
+
+Nadelen: Net als macro’s werken RPA-bots op vaste regels en schermindelingen. Als er iets verandert – andere schermlayout, nieuwe invoervelden – “breekt” de bot
+nominal.so
+. Ze vereisen dus onderhoud als processen of UIs wijzigen, wat veel gebeurt bij groeiende bedrijven. RPA is ook minder geschikt voor ongestructureerde info: bijvoorbeeld tekst begrijpen of beslissingen nemen kan het niet (tenzij je er weer AI aan koppelt). Bovendien: RPA software kan prijzig zijn en vraagt soms programmeerkennis om complexe scenario’s te bouwen.
+
+Gebruik wanneer: Als je een stabiel, repeterend proces hebt dat meerdere systemen omvat. Bijvoorbeeld: elke dag orders uit systeem A halen en invoeren in systeem B – als die schermen niet vaak wijzigen, kan RPA dat prima. Het scheelt menselijke muiskliks en werkt 24/7. Maar wees bereid om de bot aan te passen als je proces evolueert (bij elke kleine verandering moet je de “script” van de RPA updaten, anders gaat het mis
+nominal.so
+). RPA is een krachtig paard, maar eentje dat oogkleppen op heeft: het loopt exact het uitgezette pad en ziet geen context.
+
+AI-automatisering in het kort
+
+Wat is het? Hiermee bedoelen we automation aangedreven door kunstmatige intelligentie. Dit kan veel vormen aannemen: van een machine learning model dat beslissingen neemt (bv. document wel/niet valideren), tot een AI-assistent die met ongestructureerde data omgaat (bv. e-mails lezen en verschillend behandelen op inhoud). AI-automatisering kan data begrijpen en daarop baseren wat er moet gebeuren, in plaats van alleen voorgedefinieerde als/dan regels.
+
+Voordelen: Flexibiliteit en adaptiviteit. AI kan omgaan met variaties in input waar macro’s/RPA op vastlopen. Bijv. een AI die facturen uitleest werkt ook als het layout verandert of een nieuw veld bijkomt (het model leert de algemene kenmerken van een factuur). AI kan bovendien ongestructureerde bronnen aan – tekst, spraak, beelden. Probeer dat maar eens met een macro! AI kan zelflerend zijn: presteert het slecht, dan kun je het bijtrainen. Het kan dus met je organisatie meegroeien en aanpassen aan nieuwe omstandigheden
+nominal.so
+. Bovendien kan AI beslissingen nemen: een macro moet je elke regel coderen, een AI kan bijvoorbeeld op basis van historische data zelf beslissen of een klant mail X of Y krijgt (personalization).
+
+Nadelen: AI is nooit 100% foutloos en vaak een black box (minder transparant waarom het iets doet). Er is data en training nodig – je moet het een voorbeeldset geven of een model kiezen dat goed past. Dit maakt de start soms ingewikkelder dan een paar regels macro code. Ook kan AI onbedoelde biases hebben of onverwachte output. Daarnaast: AI vergt rekenkracht en is soms duur (al zijn veel cloud AI-diensten pay-per-use, wat mee kan vallen). Tenslotte heb je voor AI-projecten vaak expertise nodig (data scientist of een goed begrip van AI-tools) – dat is niet in elke MKB standaard aanwezig.
+
+Gebruik wanneer: Als de taak complexe beslissingen of ongestructureerde data omvat. Bijvoorbeeld: je wilt e-mails automatisch afhandelen – die hebben vrije tekst, dus hier zou een AI (Natural Language Processing) voor nodig zijn om te snappen wat de klant vraagt en dat door te zetten naar de juiste actie. Of wanneer de regelset te groot is: als je merkt dat je macro/RPA code enorm ingewikkeld wordt met allemaal vertakkingen en uitzonderingen, is het misschien tijd om AI te overwegen die het voorbeeldgestuurd aanpakt. AI komt ook van pas als je wil dat het systeem leert en verbetert over tijd (RPA blijft dom).
+
+Wanneer kies je welke?
+
+Scenario 1: Gestandaardiseerde, gestructureerde taak, stabiele omgeving – Voorbeeld: Elke week gegenereerd rapport in CSV format importeren in een database op exact dezelfde manier.
+Kies: Excel-macro of RPA. Je hebt geen AI nodig voor iets dat altijd hetzelfde is. Een macro of een klein RPA-script kan dit snel en foutloos doen. Geen variatie = rule-based is genoeg.
+
+Scenario 2: Meerdere systemen, geen API’s, wel vast proces – Voorbeeld: Een medewerker kopieert dagelijks gegevens van systeem A naar B en klikt dezelfde routes door.
+Kies: RPA. Dit is exact waar RPA in uitblinkt: repetitieve “menselijke” software-interacties automatiseren. Zorg wel voor monitoring: als een van de systemen een update krijgt, moet je de RPA flow updaten
+nominal.so
+.
+
+Scenario 3: Document- of e-mailverwerking met variabele inhoud – Voorbeeld: Je krijgt bestellingen per e-mail in vrije vorm van klanten, en wilt die automatisch verwerken.
+Kies: AI. Hier heb je te maken met ongestructureerde tekst, elke mail kan anders zijn. Een AI-taalmodel of classificatiemodel kan de essentie uit de mail halen (bijv. “klant wil 3 stuks product X bestellen voor datum Y”) en dat doorgeven. Een macro zou hier onmogelijk zijn, RPA zou alleen werken als elke klant exact een ingevuld formulier stuurt (gestructureerd). AI kan de taal begrijpen en flexibel omgaan met verschillende zinsconstructies.
+
+Scenario 4: Beslissingsondersteuning met patroonherkenning – Voorbeeld: Je wilt automatisch afwijkende transacties in je boekhouding markeren als “check nodig”.
+Kies: AI. Dit is patroonherkenning en anomaliedetectie – typische ML-problematiek. Je kan een regel-set proberen (alle transacties > €X van leverancier Y markeren), maar een ML-model dat gevoed is met historische data kan subtielere patronen zien (misschien is €500 normaal voor leverancier Y in januari maar niet in juli, etc.). AI kan zichzelf aanpassen aan de data en nieuwe anomalies flaggen, iets wat je met starre regels snel mist.
+
+Scenario 5: Kleine efficiëncyslag in bekende Office-procesjes – Voorbeeld: Je wil een knopje dat standaard offertes opmaakt in jouw huisstijl in Word, ingevuld met klantnaam en datum.
+Kies: Macro (of simpel script). Dit soort dingen kun je met bestaande Office-automatisering prima doen. Een AI voegt hier weinig toe, dat zou overkill zijn. Tenzij je de offerte-tekst automatisch door een AI wil laten schrijven op maat van klant (dat is weer wel een AI use-case). Maar gaat het om standaardisatie en invullen: pak macro’s of simpele scripting.
+
+Combinatie: Het is geen schande om macro/RPA en AI te combineren. Stel je RPA-bot komt in zijn proces een stap tegen waar invoer van klant verschilt per keer, dan kun je een AI-component inschakelen. Bijv: RPA haalt een email op, laat AI uitlezen wat de bedoeling is, en gaat dan verder op basis van die uitkomst (AI zegt “dit is een supportverzoek”, RPA stuurt het door naar supportsysteem). Zo heb je rigid en flexibel mooi verenigd. Dit heet ook wel Intelligent Process Automation.
+
+Voor- en nadelen overzicht (tabel)
+
+(Ter illustratie, stel je hier een tabel voor als in de blogtemplate, met kolommen “Excel-macro”, “RPA”, “AI/ML”. We beschrijven het even in tekst.)
+
+Complexiteit van taak: Macro – laag (gestructureerd), RPA – middelhoog (gestructureerd maar over apps), AI – aankan hoog (ook ongestructureerd).
+
+Aanpassingsvermogen: Macro/RPA – laag (breekt bij verandering)
+nominal.so
+, AI – hoog (kan generaliseren en bijleren)
+nominal.so
+.
+
+Ontwikkeltijd: Macro – kort (uurtjes), RPA – middellang (dagen/weken afhankelijk complexiteit), AI – middellang tot lang (weken, plus training/tuning).
+
+Onderhoud: Macro – vereist Excel-kennis, RPA – vereist specialist als processen wijzigen, AI – vereist data updates/training maar kan zelf verbeteren voor een deel.
+
+Kosten: Macro – gratis (in-house), RPA – licentiekosten vaak significant, AI – kosten voor model/licentie maar vaak schaalbaar (per gebruik, model training kosten).
+
+Use-case voorbeeld: Macro – formules toepassen op sheet, RPA – data van webportal naar intern systeem overzetten, AI – klantchat afhandelen, beeldherkenning in kwaliteitscontrole.
+
+Conclusie & aanbeveling
+
+Er is niet één winnaar tussen macro’s, RPA en AI – het gaat erom de juiste tool voor de taak te kiezen. Vaak begin je met simpele automatisering (macro’s) en naarmate je processen digitaler worden en complexer, schakel je RPA of AI in. Macro’s en RPA zijn geweldig voor stabiele, regelgebaseerde processen, terwijl AI uitblinkt in variabele, data-gedreven situaties met onduidelijkheden.
+
+Voor MKB adviseren we: kijk eerst of eenvoudige automatisering (macro, RPA) al quick wins kan geven – die investeringen zijn laag en rechttoe-rechtaan. Loop je daarbij tegen grenzen aan (het process wijzigt vaak, of de input is vrij format), dan is het tijd AI te omarmen. Het mooie is dat de drempel voor AI ook steeds lager wordt (gebruiksvriendelijke tools, out-of-the-box modellen).
+
+In de praktijk zien we ze naast elkaar bestaan: een workflow waar eerst AI iets slim herkent, en dan een RPA het administratieve vervolg afhandelt. Denk dus in oplossingen per stap van je proces: simpele stap -> macro/RPA, cognitieve stap -> AI. Zo haal je het beste van beide werelden.
+
+Veelgestelde vragen (FAQ) – Macro vs RPA vs AI
+Q: We gebruiken al veel Excel-macro’s. Moeten we die nu allemaal omzetten naar AI-oplossingen?
+A: Zeker niet zonder reden. Als jouw macro’s goed werken en onderhoudbaar zijn, is er geen directe noodzaak ze te vervangen. AI is geen doel op zich – het is een middel als oude middelen tekortschieten. Waar macro’s sufficiënt zijn, lekker zo laten. Je kunt wel kijken of bepaalde macro’s tegen hun limiet aanlopen (bijv. complexe beslisstructuren die moeilijk te onderhouden zijn). Daar zou een AI-oplossing op termijn misschien robuuster zijn. Maar “if it ain’t broke, don’t fix it” geldt hier. Je zou wel kunnen experimenteren: neem een macro-proces en kijk of een AI het sneller/beter zou kunnen, maar alleen doorvoeren als het echt een verbetering is.
+
+Q: RPA klinkt handig, maar is dat niet heel duur en iets voor corporates?
+A: RPA-software kende inderdaad reputatie duur/licentie-intensief. Maar er zijn inmiddels ook toegankelijkere RPA-tools gericht op MKB of zelfs open-source varianten. De implementatie kan vaak door een tech-savvy medewerker of met hulp van een freelancer. Als je bijvoorbeeld 3 uur handwerk per dag kunt elimineren, kan een RPA-investering zich al snel terugbetalen. Veel MKB’s beginnen klein: 1 bot voor 1 proces, kosten beperkt. Je hoeft niet meteen een volledig RPA-platform enterprise breed uit te rollen. We kunnen je eventueel helpen inschatten of een RPA-case bij jou loont en welke tooling passend is.
+
+Q: Hoe beslis ik of iets “AI-waardig” is of via regels kan?
+A: Stel jezelf een paar vragen:
+– Zijn de regels voor dit proces eenvoudig te beschrijven en zijn er weinig uitzonderingen? Zo ja, dan volstaat regel-gebaseerd (macro/RPA). Als je al begint met “ja maar behalve als dit, en behalve als dat…” dan neigt het richting AI-case.
+– Verandert de input of context vaak? (Bij AI geen probleem, bij regels wel.)
+– Is er historische data waaruit patronen geleerd kunnen worden die je zelf niet makkelijk formuleert? (Dit schreeuwt AI – vb: klantgedrag voorspellen.)
+– Is de taak repetitief maar in taal of beeld (dus niet puur cijfertjes)? (Taal/beeld -> AI gebied)
+Ook kun je een proef doen: probeer een flowchart of if-then lijst te maken voor de taak. Als dat onoverzichtelijk wordt, is AI wellicht geschikter. Maar vaak is de juiste keuze ook “beide”: een rules-engine voor wat duidelijk is, met AI-modules voor de fuzzy onderdelen.
+
+Q: Brengt AI-automatisering geen nieuwe risico’s mee vergeleken met macro’s/RPA?
+A: Het is waar dat AI minder voorspelbaar kan zijn. Een macro doet altijd hetzelfde (tenzij kapot). AI kan in 5% van de gevallen net iets anders beslissen dan verwacht. Daarom moet je bij AI goed testen en accepteren dat er een foutmarge kan zijn. Door menselijke controle in te bouwen of drempelwaarden (bijv. laat AI alleen autonoom iets doen als het 99% zeker is, anders stuurt het naar een mens), kun je risico’s mitigeren. Ook is traceerbaarheid een punt: bij macro’s weet je precies welke regel iets deed, bij AI soms niet. Dit kun je opvangen door logging (AI laat zien waarom hij iets dacht, bijv. probabilities of highlights). Macro’s/RPA hebben vooral technische risico’s (crashen bij veranderingen), AI meer inhoudelijke (verkeerde interpretatie). Met goede governance (denk aan AI outputs laten valideren in begin, modellen bijtrainen, etc.) zijn die risico’s beheersbaar. We adviseren vaak om te beginnen met AI als assistent naast een mens, en pas als het betrouwbaar blijkt stappen te automatiseren zonder tussenkomst.

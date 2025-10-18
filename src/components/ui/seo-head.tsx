@@ -8,6 +8,9 @@ interface SEOHeadProps {
   structuredData?: object;
   ogDescription?: string;
   ogImage?: string;
+  ogType?: string; // website | article
+  articlePublishedTime?: string;
+  articleModifiedTime?: string;
   noindex?: boolean;
 }
 
@@ -18,6 +21,9 @@ const SEOHead: React.FC<SEOHeadProps> = ({
   structuredData,
   ogDescription,
   ogImage = "https://paiconnect.nl/og-default.jpg",
+  ogType = "website",
+  articlePublishedTime,
+  articleModifiedTime,
   noindex = false
 }) => {
   const ogDesc = ogDescription || description.substring(0, 110);
@@ -28,6 +34,11 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       <meta name="description" content={description} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="canonical" href={canonical} />
+      {/* Hreflang for single-locale site */}
+      <link rel="alternate" hrefLang="nl-NL" href={canonical} />
+      <link rel="alternate" hrefLang="x-default" href={canonical} />
+      {/* RSS discovery */}
+      <link rel="alternate" type="application/rss+xml" title="PAIConnect Blog" href="/feed.xml" />
       
       {/* Performance hints for LCP optimization */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,12 +61,18 @@ const SEOHead: React.FC<SEOHeadProps> = ({
       {noindex && <meta name="robots" content="noindex, nofollow" />}
       
       {/* Open Graph / Facebook */}
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonical} />
       <meta property="og:title" content={ogTitle} />
       <meta property="og:description" content={ogDesc} />
       <meta property="og:image" content={ogImage} />
       <meta property="og:site_name" content="PaiConnect" />
+      {ogType === "article" && articlePublishedTime && (
+        <meta property="article:published_time" content={articlePublishedTime} />
+      )}
+      {ogType === "article" && articleModifiedTime && (
+        <meta property="article:modified_time" content={articleModifiedTime} />
+      )}
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
