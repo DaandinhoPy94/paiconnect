@@ -6,6 +6,7 @@ import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const BookingSuccess = () => {
   return (
@@ -17,10 +18,17 @@ const BookingSuccess = () => {
         noindex={true}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="min-h-screen">
         <Navigation />
         
-        <main className="container mx-auto px-4 py-12">
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+        >
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+            <div className="relative">
+              <main className="container mx-auto px-4 py-12">
           <div className="max-w-2xl mx-auto text-center">
             <div className="mb-8">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
@@ -109,7 +117,10 @@ const BookingSuccess = () => {
               </div>
             </div>
           </div>
-        </main>
+              </main>
+            </div>
+          </div>
+        </div>
 
         <Footer />
       </div>

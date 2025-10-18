@@ -17,6 +17,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { analytics } from "@/lib/analytics";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 // Step schemas for validation
 const step1Schema = z.object({
@@ -287,10 +288,17 @@ const Booking = () => {
         structuredData={structuredData}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
+      <div className="min-h-screen">
         <Navigation />
         
-        <main className="container mx-auto px-4 py-8 md:py-12">
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+        >
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+            <div className="relative">
+              <main className="container mx-auto px-4 py-8 md:py-12">
           <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="text-center mb-8 md:mb-12">
@@ -622,8 +630,10 @@ const Booking = () => {
                 </Form>
               </CardContent>
             </Card>
+              </div>
+            </main>
           </div>
-        </main>
+        </div>
 
         <Footer />
       </div>

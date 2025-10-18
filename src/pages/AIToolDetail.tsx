@@ -4,6 +4,7 @@ import Navigation from "@/components/ui/navigation";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { ArrowLeft } from "lucide-react";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const AIToolDetail = () => {
   const { toolName } = useParams<{ toolName: string }>();
@@ -131,16 +132,28 @@ const AIToolDetail = () => {
         />
         <div>
           <Navigation />
-          <main className="py-16 md:py-24">
-            <div className="container">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold mb-4">Tool niet gevonden</h1>
-                <Link to="/ai-info" className="text-primary hover:underline">
-                  ← Terug naar AI Info
-                </Link>
+          
+          <div
+            className="w-full bg-no-repeat bg-cover bg-center"
+            style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+          >
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+              <div className="relative">
+                <main className="py-16 md:py-24">
+                  <div className="container">
+                    <div className="text-center">
+                      <h1 className="text-4xl font-bold mb-4">Tool niet gevonden</h1>
+                      <Link to="/ai-info" className="text-primary hover:underline">
+                        ← Terug naar AI Info
+                      </Link>
+                    </div>
+                  </div>
+                </main>
               </div>
             </div>
-          </main>
+          </div>
+          
           <Footer />
         </div>
       </>
@@ -158,7 +171,14 @@ const AIToolDetail = () => {
       <div>
         <Navigation />
         
-        <main className="py-16 md:py-24">
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+        >
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+            <div className="relative">
+              <main className="py-16 md:py-24">
           <div className="container">
             {/* Back Navigation */}
             <div className="mb-8">
@@ -231,7 +251,10 @@ const AIToolDetail = () => {
               </div>
             </div>
           </div>
-        </main>
+              </main>
+            </div>
+          </div>
+        </div>
         
         <Footer />
       </div>

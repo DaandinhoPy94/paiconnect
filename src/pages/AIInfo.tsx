@@ -5,7 +5,7 @@ import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import aiInfoBackground from "@/assets/ai-info-background.jpg";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const AIInfo = () => {
   const aiCategories = [
@@ -164,12 +164,14 @@ const AIInfo = () => {
       <div>
         <Navigation />
         
-        <main 
-          className="relative bg-cover bg-center bg-no-repeat min-h-screen"
-          style={{
-            backgroundImage: `url(${aiInfoBackground})`
-          }}
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
         >
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+            <div className="relative">
+              <main>
           {/* Hero Section */}
           <section className="py-4 md:py-6">
             <div className="container">
@@ -284,7 +286,10 @@ const AIInfo = () => {
               </div>
             </div>
           </section>
-        </main>
+              </main>
+            </div>
+          </div>
+        </div>
         
         <Footer />
       </div>

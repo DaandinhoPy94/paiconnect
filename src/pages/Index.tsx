@@ -7,6 +7,7 @@ import ResultsSection from "@/components/ui/results-section";
 import FAQPreview from "@/components/ui/faq-preview";
 import Footer from "@/components/ui/footer";
 import SEOHead from "@/components/ui/seo-head";
+import { BANNER_LANGER_URL } from "@/lib/constants";
 
 const Index = () => {
   const structuredData = {
@@ -74,15 +75,27 @@ const Index = () => {
         structuredData={structuredData}
       />
       
-      <div className="min-h-screen relative">
+      <div className="min-h-screen">
         <Navigation />
-        <main>
-          <Hero />
-          <IntroSection />
-          <ServicesSection />
-          <ResultsSection />
-          <FAQPreview />
-        </main>
+        
+        <div
+          className="w-full bg-no-repeat bg-cover bg-center"
+          style={{ backgroundImage: `url(${BANNER_LANGER_URL})` }}
+        >
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 bg-white/40"></div>
+            <div className="relative">
+              <main>
+                <Hero />
+                <IntroSection />
+                <ServicesSection />
+                <ResultsSection />
+                <FAQPreview />
+              </main>
+            </div>
+          </div>
+        </div>
+        
         <Footer />
       </div>
     </>
