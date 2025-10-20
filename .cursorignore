@@ -1,0 +1,16 @@
+# Keep secrets out of AI context, but allow example file for reference
+!.env
+.env.*
+!.env.example
+!.env.local
+
+# Also ignore typical build artifacts
+node_modules
+.next
+out
+dist
+coverage
+*.log
+*.sqlite
+.DS_Store
+*.local.*

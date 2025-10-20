@@ -1,4 +1,12 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "paiconnect.tech" }],
+      "destination": "https://www.paiconnect.tech/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/((?!assets|.*\\..*).*)", "destination": "/" }
   ]
